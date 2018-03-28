@@ -53,7 +53,6 @@ class MapTest extends React.Component {
     }
     this.renderMapMarkers = this.renderMapMarkers.bind(this)
     this.onRegionChange = this.onRegionChange.bind(this)
-    this.onMapPress = this.onMapPress.bind(this)
   }
 
   componentWillReceiveProps(newProps) {
@@ -106,7 +105,7 @@ class MapTest extends React.Component {
     )
   }
 
-  onMapPress(coordinates) {
+  onMapPress = (coordinates) => {
     const updatedMarker = {
       ...this.state.newMarker,
       latitude: coordinates.latitude,
@@ -121,7 +120,6 @@ class MapTest extends React.Component {
   render() {
     return (
       <View style={Styles.container}>
-
         <MapView
           style={Styles.map}
           initialRegion={this.state.region}
