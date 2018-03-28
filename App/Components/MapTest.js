@@ -43,13 +43,17 @@ class MapTest extends React.Component {
     *************************************************************/
     const region = calculateRegion(locations, { latPadding: 0.05, longPadding: 0.05 })
     // const region = { latitude: 123, longitude: 123, latitudeDelta: 0.1, longitudeDelta: 0.1}
+    // initializing new marker
+    let newMarker = { title: 'New Location', latitude: null, longitude: null, render: false }
     this.state = {
+      newMarker,
       region,
       locations,
       showUserLocation: true
     }
     this.renderMapMarkers = this.renderMapMarkers.bind(this)
     this.onRegionChange = this.onRegionChange.bind(this)
+    this.onMapPress = this.onMapPress.bind(this)
   }
 
   componentWillReceiveProps(newProps) {
@@ -102,6 +106,18 @@ class MapTest extends React.Component {
     )
   }
 
+  onMapPress(coordinates) {
+    const updatedMarker = {
+      ...this.state.newMarker,
+      latitude: coordinates.latitude,
+      longitude: coordinates.longitude,
+      render: true,
+    };
+    this.setState({
+      newMarker: updatedMarker
+    });
+  }
+
   render() {
     return (
       <View style={Styles.container}>
@@ -111,8 +127,13 @@ class MapTest extends React.Component {
           initialRegion={this.state.region}
           onRegionChangeComplete={this.onRegionChange}
           showsUserLocation={this.state.showUserLocation}
+          onPress={(e) => { this.onMapPress(e.nativeEvent.coordinate) }}
+          loadingEnabled
         >
           {this.state.locations.map((location) => this.renderMapMarkers(location))}
+          {this.state.newMarker.render &&
+            this.renderMapMarkers(this.state.newMarker)
+          }
         </MapView>
       </View>
     )
