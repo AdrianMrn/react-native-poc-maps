@@ -1,8 +1,10 @@
 // a library to wrap and simplify api calls
 import apisauce from 'apisauce'
 
+import SuggestiesResponseHandler from '../Transforms/SuggestiesResponseHandler'
+
 // our "constructor"
-const create = (baseURL = 'https://api.github.com/') => {
+const create = (baseURL = 'https://fluxit.be/react/nativemaps/wp-json/') => {
   // ------
   // STEP 1
   // ------
@@ -14,7 +16,8 @@ const create = (baseURL = 'https://api.github.com/') => {
     baseURL,
     // here are some default headers
     headers: {
-      'Cache-Control': 'no-cache'
+      'Cache-Control': 'no-cache',
+      'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczpcL1wvZmx1eGl0LmJlXC9yZWFjdFwvbmF0aXZlbWFwcyIsImlhdCI6MTUyMjMxMzU4NywibmJmIjoxNTIyMzEzNTg3LCJleHAiOjE1MjI5MTgzODcsImRhdGEiOnsidXNlciI6eyJpZCI6IjIifX19.OoKmeSIUagYHgD68iWisz_tyoncy5AsbJFNEu-27Tqg',
     },
     // 10 second timeout...
     timeout: 10000
@@ -34,9 +37,30 @@ const create = (baseURL = 'https://api.github.com/') => {
   // Since we can't hide from that, we embrace it by getting out of the
   // way at this level.
   //
-  const getRoot = () => api.get('')
-  const getRate = () => api.get('rate_limit')
-  const getUser = (username) => api.get('search/users', {q: username})
+  const getSuggesties = () => api.get('acf/v3/suggesties?per_page=100').then((response) => {
+    if (response.ok) {
+      return SuggestiesResponseHandler(response);
+    }
+  });
+
+  const createSuggestie = (suggestie) => api
+    .post('wp/v2/suggesties', { title: `${suggestie.type}: ${suggestie.titel}`, status: 'publish' })
+    .then((response) => {
+      if (response.ok) {
+        return (
+          api.post(`acf/v3/suggesties/${response.data.id}`, { fields: suggestie })
+            .then((response) => {
+              if (response.ok) {
+                return response.data;
+              } else {
+                // future: show error message?
+              }
+            })
+        )
+      } else {
+        // future: show error message?
+      }
+    });
 
   // ------
   // STEP 3
@@ -52,9 +76,8 @@ const create = (baseURL = 'https://api.github.com/') => {
   //
   return {
     // a list of the API functions from step 2
-    getRoot,
-    getRate,
-    getUser
+    getSuggesties,
+    createSuggestie,
   }
 }
 

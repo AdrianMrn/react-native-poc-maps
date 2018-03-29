@@ -58,9 +58,9 @@ class MapTest extends React.Component {
     * If you wish to recenter the map on new locations any time the
     * props change, do something like this:
     *************************************************************/
-    // this.setState({
-    //   region: calculateRegion(newProps.locations, { latPadding: 0.1, longPadding: 0.1 })
-    // })
+    this.setState({
+      region: calculateRegion(newProps.locations, { latPadding: 0.1, longPadding: 0.1 })
+    });
   }
 
   onRegionChange(newRegion) {
@@ -94,12 +94,13 @@ class MapTest extends React.Component {
     * Customize the appearance and location of the map marker.
     * Customize the callout in ./MapTestCallout.js
     *************************************************************/
-
-    return (
-      <MapView.Marker key={location.title} coordinate={{ latitude: location.latitude, longitude: location.longitude }}>
-        <MapTestCallout location={location} onPress={this.calloutPress} />
-      </MapView.Marker>
-    )
+    if (location.latitude && location.longitude) {
+      return (
+        <MapView.Marker key={`${location.title}${location.address}${location.latitude}`} coordinate={{ latitude: location.latitude, longitude: location.longitude }}>
+          <MapTestCallout location={location} onPress={this.calloutPress} />
+        </MapView.Marker>
+      )
+    }
   }
 
   render() {

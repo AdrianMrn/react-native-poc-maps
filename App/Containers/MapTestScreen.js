@@ -3,6 +3,9 @@ import { ScrollView, View, Text, KeyboardAvoidingView, Modal } from 'react-nativ
 import { connect } from 'react-redux'
 // Add Actions - replace 'Your' with whatever your reducer is called :)
 // import YourActions from '../Redux/YourRedux'
+import API from '../Services/Api';
+const api = API.create();
+
 import MapTest from '../Components/MapTest';
 import NewProblemForm from '../Components/NewProblemForm';
 import RoundedButton from '../Components/RoundedButton'
@@ -14,21 +17,30 @@ class MapTestScreen extends Component {
   constructor() {
     super();
 
-    const locations = [
-      { title: 'Location A', latitude: 37.78825, longitude: -122.4324 },
-      { title: 'Location B', latitude: 37.75825, longitude: -122.4624 }
-    ]
-
     this.state = {
       pickingOnMap: false,
       showModal: false,
+      locations: [],
+      loading: false,
       // form elements
-      location: '',
+      address: '',
       title: '',
       description: '',
       newMarker: { title: 'Nieuwe locatie', latitude: null, longitude: null, render: false },
-      locations: locations,
     }
+  }
+
+  componentWillMount = () => {
+    this.getLocations();
+  }
+
+  getLocations = () => {
+    api.getSuggesties()
+      .then((response) => {
+        this.setState({
+          locations: response
+        });
+      });
   }
 
   toggleModal = () => {
@@ -61,7 +73,7 @@ class MapTestScreen extends Component {
       pickingOnMap: false,
     });
     // future: start calculating address from coordinates (API call)
-    
+
     // future: disable location input && show loading icon in location input until we get a response from API
     this.toggleModal();
   }
@@ -71,13 +83,16 @@ class MapTestScreen extends Component {
       ...this.state,
       [type]: text,
     });
+
+    // future: if (type === address) { //address autocomplete }
   }
 
   abortAddProblem = () => {
     this.setState({
       pickingOnMap: false,
       showModal: false,
-      location: '',
+      loading: false,
+      address: '',
       title: '',
       description: '',
       newMarker: { title: 'Nieuwe locatie', latitude: null, longitude: null, render: false },
@@ -85,12 +100,30 @@ class MapTestScreen extends Component {
   }
 
   submitProblem = () => {
-    console.log(this.state);
+    // future: need type toggle (Suggestie/Probleem)
+    const { title, description, address, newMarker } = this.state;
+
+    if (title && (newMarker.latitude || address)) {
+      this.setState({ loading: true });
+      // disable all inputs & button && show loading circle
+      api.createSuggestie({
+        "titel": title,
+        "type": "Suggestie",
+        "beschrijving": description,
+        "adres": address,
+        "coords_lat": newMarker.latitude,
+        "coords_lon": newMarker.longitude
+      }).then((response) => {
+        this.abortAddProblem();
+        this.getLocations();
+      })
+    } else {
+      console.log("missing some info (title && (newMarker.latitude || address)");
+    }
   }
 
   render() {
-    const { showModal, pickingOnMap, location, title, description, newMarker, locations } = this.state;
-
+    const { showModal, pickingOnMap, address, title, description, newMarker, locations, loading } = this.state;
     return (
       <View style={styles.mainContainer}>
         {/* <KeyboardAvoidingView behavior='position'> */}
@@ -116,9 +149,10 @@ class MapTestScreen extends Component {
                 startPickingOnMap={this.startPickingOnMap}
                 submitProblem={this.submitProblem}
                 onInputChange={this.onInputChange}
-                location={location}
+                address={address}
                 title={title}
                 description={description}
+                loading={loading}
               />
             </Modal>
           </View>
