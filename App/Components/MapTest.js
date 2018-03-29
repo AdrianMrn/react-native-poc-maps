@@ -30,10 +30,10 @@ class MapTest extends React.Component {
     * Set the array of locations to be displayed on your map. You'll need to define at least
     * a latitude and longitude as well as any additional information you wish to display.
     *************************************************************/
-    const locations = [
+    /* const locations = [
       { title: 'Location A', latitude: 37.78825, longitude: -122.4324 },
       { title: 'Location B', latitude: 37.75825, longitude: -122.4624 }
-    ]
+    ] */
     /* ***********************************************************
     * STEP 2
     * Set your initial region either by dynamically calculating from a list of locations (as below)
@@ -41,14 +41,11 @@ class MapTest extends React.Component {
     * You can generate a handy `calculateRegion` function with
     * `ignite generate map-utilities`
     *************************************************************/
-    const region = calculateRegion(locations, { latPadding: 0.05, longPadding: 0.05 })
+    const region = calculateRegion(props.locations, { latPadding: 0.05, longPadding: 0.05 })
     // const region = { latitude: 123, longitude: 123, latitudeDelta: 0.1, longitudeDelta: 0.1}
     // initializing new marker
-    let newMarker = { title: 'New Location', latitude: null, longitude: null, render: false }
     this.state = {
-      newMarker,
       region,
-      locations,
       showUserLocation: true
     }
     this.renderMapMarkers = this.renderMapMarkers.bind(this)
@@ -105,19 +102,8 @@ class MapTest extends React.Component {
     )
   }
 
-  onMapPress = (coordinates) => {
-    const updatedMarker = {
-      ...this.state.newMarker,
-      latitude: coordinates.latitude,
-      longitude: coordinates.longitude,
-      render: true,
-    };
-    this.setState({
-      newMarker: updatedMarker
-    });
-  }
-
   render() {
+    const { newMarker, onMapPress, locations } = this.props;
     return (
       <View style={Styles.container}>
         <MapView
@@ -125,12 +111,12 @@ class MapTest extends React.Component {
           initialRegion={this.state.region}
           onRegionChangeComplete={this.onRegionChange}
           showsUserLocation={this.state.showUserLocation}
-          onPress={(e) => { this.onMapPress(e.nativeEvent.coordinate) }}
+          onPress={(e) => { onMapPress(e.nativeEvent.coordinate) }}
           loadingEnabled
         >
-          {this.state.locations.map((location) => this.renderMapMarkers(location))}
-          {this.state.newMarker.render &&
-            this.renderMapMarkers(this.state.newMarker)
+          {locations.map((location) => this.renderMapMarkers(location))}
+          {newMarker.render &&
+            this.renderMapMarkers(newMarker)
           }
         </MapView>
       </View>

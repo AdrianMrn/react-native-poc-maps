@@ -3,7 +3,7 @@ import { ApplicationStyles } from '../../Themes/'
 
 export default StyleSheet.create({
   ...ApplicationStyles.screen,
-  newProblemButton: {
+  actionButton: {
     position: 'absolute',
     bottom: 0,
     left: 0,

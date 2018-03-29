@@ -6,32 +6,13 @@ import RoundedButton from './RoundedButton'
 import styles from './Styles/NewProblemFormStyles'
 
 export default class NewProblemForm extends React.Component {
-  state = {
-    location: '',
-    title: '',
-    description: '',
-  };
 
-  onInputChange = (text, type) => {
-    this.setState({
-      ...this.state,
-      [type]: text,
-    });
-  }
-
-  chooseOnMap = () => {
-
-  }
-
-  submitProblem = () => {
-    console.log(this.state);
-  }
 
   render() {
-    const { startPickingOnMap } = this.props;
+    const { startPickingOnMap, onInputChange, submitProblem, location, title, description, abortAddProblem } = this.props;
     return (
       <View style={styles.container}>
-        <TouchableOpacity onPress={this.props.screenProps.toggle} style={{
+        <TouchableOpacity onPress={abortAddProblem} style={{
           position: 'absolute',
           paddingTop: 30,
           paddingHorizontal: 10,
@@ -46,19 +27,19 @@ export default class NewProblemForm extends React.Component {
           </Text>
           <Input
             placeholder="locatie"
-            onChangeText={text => { this.onInputChange(text, 'location') }}
-            value={this.state.location}
+            onChangeText={text => { onInputChange(text, 'location') }}
+            value={location}
           />
           <RoundedButton onPress={startPickingOnMap}>Op kaart aanduiden</RoundedButton>
           <Input
             placeholder="titel"
-            onChangeText={text => { this.onInputChange(text, 'title') }}
-            value={this.state.title}
+            onChangeText={text => { onInputChange(text, 'title') }}
+            value={title}
           />
           <Input
             placeholder="beschrijving"
-            onChangeText={text => { this.onInputChange(text, 'description') }}
-            value={this.state.description}
+            onChangeText={text => { onInputChange(text, 'description') }}
+            value={description}
           />
         </ScrollView>
         <View style={styles.submitButton}>
