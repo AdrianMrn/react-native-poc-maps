@@ -8,5 +8,11 @@ export default StyleSheet.create({
     bottom: 0,
     left: 0,
     right: 0,
+  },
+  addingLocationHint: {
+    position: 'absolute',
+    top: 50,
+    left: 0,
+    right: 0,
   }
 })

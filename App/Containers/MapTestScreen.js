@@ -48,10 +48,11 @@ class MapTestScreen extends Component {
   }
 
   startPickingOnMap = () => {
+    // future: show hint "Duw op de kaart om een plaats te kiezen"
     this.setState({
       pickingOnMap: true,
     });
-    this.toggleModal();
+    // this.toggleModal();
   }
 
   onMapPress = (coordinates) => {
@@ -68,14 +69,13 @@ class MapTestScreen extends Component {
     }
   }
 
-  pickLocation = () => {
+  confirmLocation = () => {
     this.setState({
       pickingOnMap: false,
+      showModal: true
     });
     // future: start calculating address from coordinates (API call)
-
     // future: disable location input && show loading icon in location input until we get a response from API
-    this.toggleModal();
   }
 
   onInputChange = (text, type) => {
@@ -126,18 +126,16 @@ class MapTestScreen extends Component {
     const { showModal, pickingOnMap, address, title, description, newMarker, locations, loading } = this.state;
     return (
       <View style={styles.mainContainer}>
-        {/* <KeyboardAvoidingView behavior='position'> */}
         <MapTest
           onMapPress={this.onMapPress}
           newMarker={newMarker}
           pickingOnMap={pickingOnMap}
           locations={locations}
         />
-        {/* </KeyboardAvoidingView> */}
         {!pickingOnMap &&
           <View>
             <View style={styles.actionButton}>
-              <RoundedButton onPress={this.toggleModal}>
+              <RoundedButton onPress={this.startPickingOnMap}>
                 Nieuw Probleem
               </RoundedButton>
             </View>
@@ -159,8 +157,11 @@ class MapTestScreen extends Component {
         }
         {pickingOnMap &&
           <View>
+            <View style={styles.addingLocationHint}>
+              <Text>Duw op de kaart om een plaats te kiezen</Text> {/* future: fix this */}
+            </View>
             <View style={styles.actionButton}>
-              <RoundedButton onPress={this.pickLocation}>
+              <RoundedButton onPress={this.confirmLocation}>
                 Plaats bevestigen
               </RoundedButton>
             </View>

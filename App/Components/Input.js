@@ -21,7 +21,7 @@ const Input = ({ label, value, onChangeText, placeholder, secureTextEntry }) => 
 const styles = {
     containerStyle: {
         flex: 1,
-        height: 40,
+        height: 50,
         flexDirection: 'row',
         alignItems: 'center',
         paddingLeft: 20,

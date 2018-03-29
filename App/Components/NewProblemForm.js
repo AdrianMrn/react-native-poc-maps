@@ -38,9 +38,9 @@ export default class NewProblemForm extends React.Component {
         </TouchableOpacity>
         <ScrollView showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="handled" style={styles.container}>
           <KeyboardAvoidingView>
-            <Text style={styles.sectionText}>
+            {/* <Text style={styles.sectionText}>
               Nieuw probleem
-            </Text>
+            </Text> */}
             <Input
               placeholder="locatie"
               onChangeText={text => { onInputChange(text, 'address') }}

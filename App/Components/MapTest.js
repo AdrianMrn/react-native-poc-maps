@@ -70,18 +70,29 @@ class MapTest extends React.Component {
   };
 
   componentDidMount = () => {
-    return this.getCurrentLocation().then(position => {
-      if (position) {
+    return this.getCurrentLocation()
+      .then(position => {
+        if (position) {
+          this.setState({
+            region: {
+              latitude: position.coords.latitude,
+              longitude: position.coords.longitude,
+              latitudeDelta: 0.005,
+              longitudeDelta: 0.005,
+            },
+          });
+        }
+      })
+      .catch(() => {
         this.setState({
           region: {
-            latitude: position.coords.latitude,
-            longitude: position.coords.longitude,
-            latitudeDelta: 0.005,
-            longitudeDelta: 0.005,
-          },
-        });
-      }
-    });
+            latitude: 51.2477388,
+            longitude: 4.4363558,
+            latitudeDelta: 0.5,
+            longitudeDelta: 0.5,
+          }
+        })
+      })
   }
 
   onRegionChange(newRegion) {
