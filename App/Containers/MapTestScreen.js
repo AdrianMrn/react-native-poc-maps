@@ -84,7 +84,7 @@ class MapTestScreen extends Component {
       [type]: text,
     });
 
-    // future: if (type === address) { //address autocomplete }
+    // future: if (type === address) { // address autocomplete }
   }
 
   abortAddProblem = () => {

@@ -58,8 +58,29 @@ class MapTest extends React.Component {
     * If you wish to recenter the map on new locations any time the
     * props change, do something like this:
     *************************************************************/
-    this.setState({
+    /* this.setState({
       region: calculateRegion(newProps.locations, { latPadding: 0.1, longPadding: 0.1 })
+    }); */
+  }
+
+  getCurrentLocation = () => {
+    return new Promise((resolve, reject) => {
+      navigator.geolocation.getCurrentPosition(position => resolve(position), e => reject(e));
+    });
+  };
+
+  componentDidMount = () => {
+    return this.getCurrentLocation().then(position => {
+      if (position) {
+        this.setState({
+          region: {
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude,
+            latitudeDelta: 0.005,
+            longitudeDelta: 0.005,
+          },
+        });
+      }
     });
   }
 
@@ -117,7 +138,11 @@ class MapTest extends React.Component {
         >
           {locations.map((location) => this.renderMapMarkers(location))}
           {newMarker.render &&
-            this.renderMapMarkers(newMarker)
+            <MapView.Marker
+              key={`${newMarker.title}${newMarker.address}${newMarker.latitude}`}
+              coordinate={{ latitude: newMarker.latitude, longitude: newMarker.longitude }}
+              draggable
+            />
           }
         </MapView>
       </View>

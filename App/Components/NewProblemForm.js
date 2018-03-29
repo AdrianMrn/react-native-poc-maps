@@ -36,7 +36,7 @@ export default class NewProblemForm extends React.Component {
           <Text>X</Text>
           {/* <Image source={Images.closeButton} /> */}
         </TouchableOpacity>
-        <ScrollView showsVerticalScrollIndicator={false} bounces={false} style={styles.container}>
+        <ScrollView showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="handled" style={styles.container}>
           <KeyboardAvoidingView>
             <Text style={styles.sectionText}>
               Nieuw probleem
