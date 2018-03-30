@@ -22,6 +22,7 @@ class MapTestScreen extends Component {
       showModal: false,
       locations: [],
       loading: false,
+      userPosition: { latitude: null, longitude: null },
       // form elements
       address: '',
       title: '',
@@ -48,11 +49,30 @@ class MapTestScreen extends Component {
   }
 
   startPickingOnMap = () => {
-    // future: show hint "Duw op de kaart om een plaats te kiezen"
+    const { newMarker, userPosition } = this.state;
+    const updatedState = {
+      pickingOnMap: true
+    };
+
+    if (!newMarker.latitude) {
+      if (userPosition.latitude) {
+        updatedState.newMarker = { latitude: userPosition.latitude, longitude: userPosition.longitude, render: true }
+      }
+    }
+
     this.setState({
-      pickingOnMap: true,
+      ...updatedState
     });
-    // this.toggleModal();
+  }
+
+  setUserLocationInState = (position) => {
+    console.log("setting location in state:", position)
+    this.setState({
+      userPosition: {
+        latitude: position.coords.latitude,
+        longitude: position.coords.longitude,
+      }
+    });
   }
 
   onMapPress = (coordinates) => {
@@ -92,6 +112,7 @@ class MapTestScreen extends Component {
       pickingOnMap: false,
       showModal: false,
       loading: false,
+      // form elements
       address: '',
       title: '',
       description: '',
@@ -128,8 +149,8 @@ class MapTestScreen extends Component {
       <View style={styles.mainContainer}>
         <MapTest
           onMapPress={this.onMapPress}
+          setUserLocationInState={this.setUserLocationInState}
           newMarker={newMarker}
-          pickingOnMap={pickingOnMap}
           locations={locations}
         />
         {!pickingOnMap &&
@@ -158,7 +179,7 @@ class MapTestScreen extends Component {
         {pickingOnMap &&
           <View>
             <View style={styles.addingLocationHint}>
-              <Text>Duw op de kaart om een plaats te kiezen</Text> {/* future: fix this */}
+              <Text>Duw op de kaart om een plaats te kiezen</Text>
             </View>
             <View style={styles.actionButton}>
               <RoundedButton onPress={this.confirmLocation}>

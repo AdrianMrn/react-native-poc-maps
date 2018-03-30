@@ -73,6 +73,8 @@ class MapTest extends React.Component {
     return this.getCurrentLocation()
       .then(position => {
         if (position) {
+          this.props.setUserLocationInState(position);
+          navigator.geolocation.watchPosition(position => this.props.setUserLocationInState(position));
           this.setState({
             region: {
               latitude: position.coords.latitude,
@@ -153,6 +155,7 @@ class MapTest extends React.Component {
               key={`${newMarker.title}${newMarker.address}${newMarker.latitude}`}
               coordinate={{ latitude: newMarker.latitude, longitude: newMarker.longitude }}
               draggable
+              onDragEnd={(e) => { onMapPress(e.nativeEvent.coordinate) }}
             />
           }
         </MapView>
