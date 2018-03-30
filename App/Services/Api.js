@@ -62,6 +62,18 @@ const create = (baseURL = 'https://fluxit.be/react/nativemaps/wp-json/') => {
       }
     });
 
+  const googleApiKey = 'AIzaSyAvDH-7WmIYg__JkL4CPu9TqSbj3sW-B_k';
+  const reverseGeocode = (position) => api
+    .post(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${position.latitude},${position.longitude}&key=${googleApiKey}`)
+    .then((response) => {
+      if (response.ok && response.data.status === "OK") {
+        return (response.data.results[0].formatted_address);
+      } else {
+        return "";
+      }
+    });
+
+
   // ------
   // STEP 3
   // ------
@@ -78,6 +90,7 @@ const create = (baseURL = 'https://fluxit.be/react/nativemaps/wp-json/') => {
     // a list of the API functions from step 2
     getSuggesties,
     createSuggestie,
+    reverseGeocode
   }
 }
 

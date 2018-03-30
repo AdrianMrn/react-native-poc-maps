@@ -21,14 +21,15 @@ export default StyleSheet.create({
   },
   hintContainer: {
     position: 'absolute',
-    top: -Metrics.screenHeight + 110,
-    left: Metrics.baseMargin,
-    right: Metrics.baseMargin,
+    top: -Metrics.screenHeight + 50,
+    left: Metrics.doubleBaseMargin,
+    right: Metrics.doubleBaseMargin,
     justifyContent: 'center',
     alignItems: 'center',
   },
   hintText: {
     color: Colors.charcoal,
-    fontSize: 16
+    fontSize: 16,
+    textAlign: 'center'
   }
 })

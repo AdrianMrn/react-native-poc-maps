@@ -42,20 +42,23 @@ export default class NewProblemForm extends React.Component {
               Nieuw probleem
             </Text> */}
             <Input
-              placeholder="locatie"
+              placeholder="Adres"
               onChangeText={text => { onInputChange(text, 'address') }}
               value={address}
             />
-            <RoundedButton onPress={startPickingOnMap}>Op kaart aanduiden</RoundedButton>
+            <RoundedButton onPress={startPickingOnMap}>Locatie wijzigen</RoundedButton>
+            {/* <Text>Korte beschrijving</Text> */}
             <Input
-              placeholder="titel"
+              placeholder="Titel"
               onChangeText={text => { onInputChange(text, 'title') }}
               value={title}
+              focus
             />
             <Input
-              placeholder="beschrijving"
+              placeholder="Beschrijving"
               onChangeText={text => { onInputChange(text, 'description') }}
               value={description}
+              textarea
             />
           </KeyboardAvoidingView>
         </ScrollView>

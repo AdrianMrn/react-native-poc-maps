@@ -1,10 +1,16 @@
 import React from 'react';
 import { View, Text, TextInput } from 'react-native';
 
-const Input = ({ label, value, onChangeText, placeholder, secureTextEntry }) => {
+
+const Input = ({ label, value, onChangeText, placeholder, secureTextEntry, textarea, focus }) => {
+    if (textarea) {
+        var extraContainerStyle = { height: 100 }
+        var maxHeight = 100;
+    }
+
     return (
-        <View style={styles.containerStyle}>
-            { !!label &&
+        <View style={[styles.containerStyle, extraContainerStyle]}>
+            {!!label &&
                 <Text style={styles.labelStyle}>{label}</Text>}
             <TextInput
                 secureTextEntry={secureTextEntry}
@@ -13,6 +19,11 @@ const Input = ({ label, value, onChangeText, placeholder, secureTextEntry }) => 
                 value={value}
                 onChangeText={onChangeText}
                 style={styles.inputStyle}
+                // multiline
+                autoGrow={textarea}
+                multiline={textarea}
+                autoFocus={focus}
+                maxHeight={maxHeight}
             />
         </View>
     );

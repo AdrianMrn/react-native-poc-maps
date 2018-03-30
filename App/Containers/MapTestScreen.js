@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { ScrollView, View, Text, KeyboardAvoidingView, Modal } from 'react-native'
+import { ScrollView, View, Text, Modal } from 'react-native'
 import { connect } from 'react-redux'
 // Add Actions - replace 'Your' with whatever your reducer is called :)
 // import YourActions from '../Redux/YourRedux'
@@ -68,7 +68,6 @@ class MapTestScreen extends Component {
   }
 
   setUserLocationInState = (position) => {
-    console.log("setting location in state:", position)
     this.setState({
       userPosition: {
         latitude: position.coords.latitude,
@@ -96,8 +95,12 @@ class MapTestScreen extends Component {
       pickingOnMap: false,
       showModal: true
     });
-    // future: start calculating address from coordinates (API call)
-    // future: disable location input && show loading icon in location input until we get a response from API
+    // start calculating address from coordinates (API call)
+    api.reverseGeocode(this.state.newMarker).then((result) => {
+      this.setState({
+        address: result
+      });
+    });
   }
 
   onInputChange = (text, type) => {
@@ -182,9 +185,9 @@ class MapTestScreen extends Component {
         }
         {pickingOnMap &&
           <View>
-            <View style={styles.locationSearch}>
+            {/* <View style={styles.locationSearch}>
               <LocationSearch />
-            </View>
+            </View> */}
             <View style={styles.hintContainer}>
               <Text style={styles.hintText}>Duw op de kaart om een plaats te kiezen</Text>
             </View>
