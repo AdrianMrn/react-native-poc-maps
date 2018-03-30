@@ -8,7 +8,8 @@ const api = API.create();
 
 import MapTest from '../Components/MapTest';
 import NewProblemForm from '../Components/NewProblemForm';
-import RoundedButton from '../Components/RoundedButton'
+import RoundedButton from '../Components/RoundedButton';
+import LocationSearch from '../Components/LocationSearch';
 
 // Styles
 import styles from './Styles/MapTestScreenStyle'
@@ -36,6 +37,7 @@ class MapTestScreen extends Component {
   }
 
   getLocations = () => {
+    // future: load in on toggle background (focus)
     api.getSuggesties()
       .then((response) => {
         this.setState({
@@ -161,8 +163,10 @@ class MapTestScreen extends Component {
               </RoundedButton>
             </View>
             <Modal
+              animationType="slide"
               visible={showModal}
-              onRequestClose={this.toggleModal}>
+              onRequestClose={this.toggleModal}
+            >
               <NewProblemForm
                 abortAddProblem={this.abortAddProblem}
                 startPickingOnMap={this.startPickingOnMap}
@@ -178,8 +182,11 @@ class MapTestScreen extends Component {
         }
         {pickingOnMap &&
           <View>
-            <View style={styles.addingLocationHint}>
-              <Text>Duw op de kaart om een plaats te kiezen</Text>
+            <View style={styles.locationSearch}>
+              <LocationSearch />
+            </View>
+            <View style={styles.hintContainer}>
+              <Text style={styles.hintText}>Duw op de kaart om een plaats te kiezen</Text>
             </View>
             <View style={styles.actionButton}>
               <RoundedButton onPress={this.confirmLocation}>
