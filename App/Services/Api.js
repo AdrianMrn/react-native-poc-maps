@@ -37,6 +37,10 @@ const create = (baseURL = 'https://fluxit.be/react/nativemaps/wp-json/') => {
   // Since we can't hide from that, we embrace it by getting out of the
   // way at this level.
   //
+  const capitaliseFirstLetter = (string) => {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  }
+
   const getSuggesties = () => api.get('acf/v3/suggesties?per_page=100').then((response) => {
     if (response.ok) {
       return SuggestiesResponseHandler(response);
@@ -44,7 +48,7 @@ const create = (baseURL = 'https://fluxit.be/react/nativemaps/wp-json/') => {
   });
 
   const createSuggestie = (suggestie) => api
-    .post('wp/v2/suggesties', { title: `${suggestie.type}: ${suggestie.titel}`, status: 'publish' })
+    .post('wp/v2/suggesties', { title: `${suggestie.type}: ${this.capitaliseFirstLetter(suggestie.titel)}`, status: 'publish' })
     .then((response) => {
       if (response.ok) {
         return (
