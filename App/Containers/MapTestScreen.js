@@ -21,7 +21,6 @@ class MapTestScreen extends Component {
     super();
 
     this.state = {
-      /* showToast: false, */
       pickingOnMap: false,
       showModal: false,
       locations: [],
@@ -32,6 +31,7 @@ class MapTestScreen extends Component {
       title: '',
       description: '',
       newMarker: { title: 'Nieuwe locatie', latitude: null, longitude: null, render: false },
+      showErrors: false,
     }
   }
 
@@ -54,6 +54,13 @@ class MapTestScreen extends Component {
   }
 
   startPickingOnMap = () => {
+    Toast.show({
+      text: 'Duw op de kaart om een plaats te kiezen!',
+      position: 'top',
+      buttonText: 'OK',
+      duration: 7000
+    });
+
     const { newMarker, userPosition } = this.state;
     const updatedState = {
       pickingOnMap: true,
@@ -126,6 +133,7 @@ class MapTestScreen extends Component {
       title: '',
       description: '',
       newMarker: { title: 'Nieuwe locatie', latitude: null, longitude: null, render: false },
+      showErrors: false,
     });
   }
 
@@ -164,16 +172,20 @@ class MapTestScreen extends Component {
         this.getLocations();
       })
     } else {
+      // toast shows below modal: https://github.com/GeekyAnts/NativeBase/issues/985
       /* Toast.show({
-        text: 'Vul aub alle velden in!',
+        text: 'Vul aub alle velden in',
         position: 'top',
-        buttonText: 'OK'
+        buttonText: 'OK',
+        duration: 7000,
+        type: 'danger',
       }); */
+      this.setState({ showErrors: true });
     }
   }
 
   render() {
-    const { showModal, pickingOnMap, address, title, description, newMarker, locations, loading } = this.state;
+    const { showModal, pickingOnMap, address, title, description, newMarker, locations, loading, showErrors } = this.state;
     return (
       <Container>
         <View style={styles.mainContainer}>
@@ -203,6 +215,7 @@ class MapTestScreen extends Component {
               title={title}
               description={description}
               loading={loading}
+              showErrors={showErrors}
             />
           </Modal>
         </View>

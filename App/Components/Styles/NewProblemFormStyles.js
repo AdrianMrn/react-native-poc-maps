@@ -71,5 +71,15 @@ export default StyleSheet.create({
     ...Fonts.style.h5,
     fontSize: 12,
     color: Colors.snow
-  }
+  },
+  imagePreview: {
+    width: Metrics.screenWidth - Metrics.doubleBaseMargin*2,
+    height: Metrics.screenWidth - Metrics.doubleBaseMargin*2,
+    alignSelf: 'center',
+    elevation: 5,
+  },
+  addImageButton: {
+    marginVertical: Metrics.doubleBaseMargin,
+    marginLeft: Metrics.baseMargin,
+  },
 })
