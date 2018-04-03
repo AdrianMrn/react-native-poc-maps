@@ -1,10 +1,12 @@
 import React, { Component } from 'react'
-import { ScrollView, View, Text, Modal } from 'react-native'
+import { ScrollView, View, Modal } from 'react-native'
 import { connect } from 'react-redux'
 // Add Actions - replace 'Your' with whatever your reducer is called :)
 // import YourActions from '../Redux/YourRedux'
 import API from '../Services/Api';
 const api = API.create();
+
+import { Container, Header, Title, Content, Footer, FooterTab, Button, Left, Right, Body, Icon, Text, Toast } from 'native-base';
 
 import MapTest from '../Components/MapTest';
 import NewProblemForm from '../Components/NewProblemForm';
@@ -19,6 +21,7 @@ class MapTestScreen extends Component {
     super();
 
     this.state = {
+      /* showToast: false, */
       pickingOnMap: false,
       showModal: false,
       locations: [],
@@ -53,7 +56,8 @@ class MapTestScreen extends Component {
   startPickingOnMap = () => {
     const { newMarker, userPosition } = this.state;
     const updatedState = {
-      pickingOnMap: true
+      pickingOnMap: true,
+      showModal: false
     };
 
     if (!newMarker.latitude) {
@@ -144,61 +148,66 @@ class MapTestScreen extends Component {
         this.getLocations();
       })
     } else {
-      console.log("missing some info (title && (newMarker.latitude || address)");
+      /* Toast.show({
+        text: 'Vul aub alle velden in!',
+        position: 'top',
+        buttonText: 'OK'
+      }); */
     }
   }
 
   render() {
     const { showModal, pickingOnMap, address, title, description, newMarker, locations, loading } = this.state;
     return (
-      <View style={styles.mainContainer}>
-        <MapTest
-          onMapPress={this.onMapPress}
-          setUserLocationInState={this.setUserLocationInState}
-          newMarker={newMarker}
-          locations={locations}
-        />
-        {!pickingOnMap &&
-          <View>
-            <View style={styles.actionButton}>
-              <RoundedButton onPress={this.startPickingOnMap}>
-                Nieuw Probleem
-              </RoundedButton>
-            </View>
-            <Modal
-              animationType="slide"
-              visible={showModal}
-              onRequestClose={this.toggleModal}
-            >
-              <NewProblemForm
-                abortAddProblem={this.abortAddProblem}
-                startPickingOnMap={this.startPickingOnMap}
-                submitProblem={this.submitProblem}
-                onInputChange={this.onInputChange}
-                address={address}
-                title={title}
-                description={description}
-                loading={loading}
-              />
-            </Modal>
-          </View>
-        }
-        {pickingOnMap &&
-          <View>
-            {/* <View style={styles.locationSearch}>
-              <LocationSearch />
-            </View> */}
+      <Container>
+        <Header>
+          <Body>
+            <Title>Suggesties en Problemen</Title>
+          </Body>
+        </Header>
+        <View style={styles.mainContainer}>
+          <MapTest
+            onMapPress={this.onMapPress}
+            setUserLocationInState={this.setUserLocationInState}
+            newMarker={newMarker}
+            locations={locations}
+          />
+          {pickingOnMap &&
             <View style={styles.hintContainer}>
               <Text style={styles.hintText}>Duw op de kaart om een plaats te kiezen</Text>
             </View>
-            <View style={styles.actionButton}>
-              <RoundedButton onPress={this.confirmLocation}>
-                Plaats bevestigen
-              </RoundedButton>
-            </View>
-          </View>
-        }
-      </View>
+          }
+          <Modal
+            animationType="slide"
+            visible={showModal}
+            onRequestClose={this.toggleModal}
+          >
+            <NewProblemForm
+              abortAddProblem={this.abortAddProblem}
+              startPickingOnMap={this.startPickingOnMap}
+              submitProblem={this.submitProblem}
+              onInputChange={this.onInputChange}
+              address={address}
+              title={title}
+              description={description}
+              loading={loading}
+            />
+          </Modal>
+        </View>
+        <Footer>
+          <FooterTab>
+            {!pickingOnMap &&
+              <Button full primary onPress={this.startPickingOnMap}>
+                <Text style={{ color: 'white' }}>Nieuw probleem</Text>
+              </Button>}
+            {pickingOnMap &&
+              <Button full primary onPress={this.confirmLocation}>
+                <Text style={{ color: 'white' }}>Plaats bevestigen</Text>
+              </Button>
+            }
+          </FooterTab>
+        </Footer>
+      </Container >
     )
   }
 }

@@ -4,20 +4,24 @@ import ReduxNavigation from '../Navigation/ReduxNavigation'
 import { connect } from 'react-redux'
 import StartupActions from '../Redux/StartupRedux'
 
+import { Root } from "native-base";
+
 // Styles
 import styles from './Styles/RootContainerStyles'
 
 class RootContainer extends Component {
-  componentDidMount () {
+  componentDidMount() {
     this.props.startup()
   }
 
-  render () {
+  render() {
     return (
-      <View style={styles.applicationView}>
-        <StatusBar barStyle='light-content' />
-        <ReduxNavigation />
-      </View>
+      <Root>
+        <View style={styles.applicationView}>
+          <StatusBar barStyle='light-content' />
+          <ReduxNavigation />
+        </View>
+      </Root>
     )
   }
 }

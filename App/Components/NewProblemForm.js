@@ -1,24 +1,25 @@
 import React from 'react'
-import { ScrollView, Text, Image, View, TouchableOpacity, KeyboardAvoidingView } from 'react-native'
+import { ScrollView, Image, View, TouchableOpacity, KeyboardAvoidingView } from 'react-native'
 
-import Input from './Input'
 import RoundedButton from './RoundedButton'
 import styles from './Styles/NewProblemFormStyles'
+
+import { Container, Header, Title, Content, Footer, FooterTab, Button, Left, Right, Body, Icon, Text, Spinner, Form, Input, Item, Label } from 'native-base';
 
 export default class NewProblemForm extends React.Component {
   renderButton = () => {
     const { loading, submitProblem } = this.props;
     if (loading) {
       return (
-        <RoundedButton>
-          Laden
-        </RoundedButton>
+        <Button full primary>
+          <Spinner color='white' />
+        </Button>
       );
     } else {
       return (
-        <RoundedButton onPress={submitProblem}>
-          Bevestigen
-        </RoundedButton>
+        <Button full primary onPress={submitProblem}>
+          <Text style={{ color: 'white' }}>Bevestigen</Text>
+        </Button>
       );
     }
   }
@@ -26,46 +27,58 @@ export default class NewProblemForm extends React.Component {
   render() {
     const { startPickingOnMap, onInputChange, submitProblem, address, title, description, abortAddProblem } = this.props;
     return (
-      <View style={styles.container}>
-        <TouchableOpacity onPress={abortAddProblem} style={{
-          position: 'absolute',
-          paddingTop: 30,
-          paddingHorizontal: 10,
-          zIndex: 10
-        }}>
-          <Text>X</Text>
-          {/* <Image source={Images.closeButton} /> */}
-        </TouchableOpacity>
-        <ScrollView showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="handled" style={styles.container}>
-          <KeyboardAvoidingView>
-            {/* <Text style={styles.sectionText}>
-              Nieuw probleem
-            </Text> */}
-            <Input
-              placeholder="Adres"
-              onChangeText={text => { onInputChange(text, 'address') }}
-              value={address}
-            />
-            <RoundedButton onPress={startPickingOnMap}>Locatie wijzigen</RoundedButton>
-            {/* <Text>Korte beschrijving</Text> */}
-            <Input
-              placeholder="Titel"
-              onChangeText={text => { onInputChange(text, 'title') }}
-              value={title}
-              focus
-            />
-            <Input
-              placeholder="Beschrijving"
-              onChangeText={text => { onInputChange(text, 'description') }}
-              value={description}
-              textarea
-            />
-          </KeyboardAvoidingView>
-        </ScrollView>
-        <View style={styles.submitButton}>
-          {this.renderButton()}
-        </View>
-      </View>
+      <Container>
+        <Header>
+          <Left>
+            <Button light onPress={abortAddProblem}>
+              <Icon name='arrow-back' />
+            </Button>
+          </Left>
+          <Body>
+            <Title>Nieuw</Title>
+          </Body>
+          <Right />
+        </Header>
+
+        <Content padder>
+          {/* <ScrollView showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="handled" style={styles.container}> */}
+          <Form>
+            <Item>
+              <Label>Adres</Label>
+              <Input
+                onChangeText={text => { onInputChange(text, 'address') }}
+                value={address}
+              />
+              <Button transparent onPress={startPickingOnMap}>
+                <Icon name='md-create' />
+              </Button>
+            </Item>
+
+            <Item floatingLabel>
+              <Label>Titel</Label>
+              <Input
+                onChangeText={text => { onInputChange(text, 'title') }}
+                value={title}
+                focus
+              />
+            </Item>
+
+            <Item floatingLabel>
+              <Label>Beschrijving</Label>
+              <Input
+                onChangeText={text => { onInputChange(text, 'description') }}
+                value={description}
+              />
+            </Item>
+          </Form>
+        </Content>
+
+        <Footer>
+          <FooterTab>
+            {this.renderButton()}
+          </FooterTab>
+        </Footer>
+      </Container>
     )
   }
 }

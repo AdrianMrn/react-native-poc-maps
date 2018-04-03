@@ -18,7 +18,7 @@ const create = (baseURL = 'https://fluxit.be/react/nativemaps/wp-json/') => {
     headers: {
       'Cache-Control': 'no-cache',
       'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczpcL1wvZmx1eGl0LmJlXC9yZWFjdFwvbmF0aXZlbWFwcyIsImlhdCI6MTUyMjMxMzU4NywibmJmIjoxNTIyMzEzNTg3LCJleHAiOjE1MjI5MTgzODcsImRhdGEiOnsidXNlciI6eyJpZCI6IjIifX19.OoKmeSIUagYHgD68iWisz_tyoncy5AsbJFNEu-27Tqg',
-    },
+    }, // future: place this in an .env or whatever. I know I shouldn't be placing this here, please don't steal it thanks
     // 10 second timeout...
     timeout: 10000
   })
@@ -48,7 +48,7 @@ const create = (baseURL = 'https://fluxit.be/react/nativemaps/wp-json/') => {
   });
 
   const createSuggestie = (suggestie) => api
-    .post('wp/v2/suggesties', { title: `${suggestie.type}: ${this.capitaliseFirstLetter(suggestie.titel)}`, status: 'publish' })
+    .post('wp/v2/suggesties', { title: `${suggestie.type}: ${capitaliseFirstLetter(suggestie.titel)}`, status: 'publish' })
     .then((response) => {
       if (response.ok) {
         return (
@@ -66,7 +66,7 @@ const create = (baseURL = 'https://fluxit.be/react/nativemaps/wp-json/') => {
       }
     });
 
-  const googleApiKey = 'AIzaSyAvDH-7WmIYg__JkL4CPu9TqSbj3sW-B_k';
+  const googleApiKey = 'AIzaSyAvDH-7WmIYg__JkL4CPu9TqSbj3sW-B_k'; // future: to .env or whatever. Please don't use this if you found it on GitHub k thanks :)
   const reverseGeocode = (position) => api
     .post(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${position.latitude},${position.longitude}&key=${googleApiKey}`)
     .then((response) => {
