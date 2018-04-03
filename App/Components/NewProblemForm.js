@@ -18,7 +18,7 @@ export default class NewProblemForm extends React.Component {
     } else {
       return (
         <Button full primary onPress={submitProblem}>
-          <Text style={{ color: 'white' }}>Bevestigen</Text>
+          <Text style={{ color: 'white', fontSize: 16 }}>Bevestigen</Text>
         </Button>
       );
     }
@@ -28,19 +28,10 @@ export default class NewProblemForm extends React.Component {
     const { startPickingOnMap, onInputChange, submitProblem, address, title, description, abortAddProblem } = this.props;
     return (
       <Container>
-        <Header>
-          <Left>
-            <Button light onPress={abortAddProblem}>
-              <Icon name='arrow-back' />
-            </Button>
-          </Left>
-          <Body>
-            <Title>Nieuw</Title>
-          </Body>
-          <Right />
-        </Header>
-
         <Content padder>
+          <Button transparent onPress={abortAddProblem}>
+            <Icon name='arrow-back' />
+          </Button>
           {/* <ScrollView showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="handled" style={styles.container}> */}
           <Form>
             <Item>

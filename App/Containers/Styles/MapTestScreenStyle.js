@@ -5,9 +5,11 @@ export default StyleSheet.create({
   ...ApplicationStyles.screen,
   actionButton: {
     position: 'absolute',
-    bottom: 20,
-    left: 0,
-    right: 0,
+    bottom: 30,
+    alignSelf: 'center',
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: Metrics.doubleBaseMargin
   },
   locationSearch: {
     position: 'absolute',

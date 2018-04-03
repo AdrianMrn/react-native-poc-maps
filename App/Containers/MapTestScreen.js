@@ -129,6 +129,22 @@ class MapTestScreen extends Component {
     });
   }
 
+  renderButton = () => {
+    if (!this.state.pickingOnMap) {
+      return (
+        <Button rounded primary onPress={this.startPickingOnMap} style={styles.actionButton}>
+          <Text style={{ color: 'white', fontSize: 16, textAlign: 'center' }}>Nieuw probleem</Text>
+        </Button>
+      );
+    } else {
+      return (
+        <Button rounded primary onPress={this.confirmLocation} style={styles.actionButton}>
+          <Text style={{ color: 'white', fontSize: 16, textAlign: 'center' }}>Plaats bevestigen</Text>
+        </Button>
+      );
+    }
+  }
+
   submitProblem = () => {
     // future: need type toggle (Suggestie/Probleem)
     const { title, description, address, newMarker } = this.state;
@@ -160,11 +176,6 @@ class MapTestScreen extends Component {
     const { showModal, pickingOnMap, address, title, description, newMarker, locations, loading } = this.state;
     return (
       <Container>
-        <Header>
-          <Body>
-            <Title>Suggesties en Problemen</Title>
-          </Body>
-        </Header>
         <View style={styles.mainContainer}>
           <MapTest
             onMapPress={this.onMapPress}
@@ -177,6 +188,7 @@ class MapTestScreen extends Component {
               <Text style={styles.hintText}>Duw op de kaart om een plaats te kiezen</Text>
             </View>
           }
+          {this.renderButton()}
           <Modal
             animationType="slide"
             visible={showModal}
@@ -194,19 +206,6 @@ class MapTestScreen extends Component {
             />
           </Modal>
         </View>
-        <Footer>
-          <FooterTab>
-            {!pickingOnMap &&
-              <Button full primary onPress={this.startPickingOnMap}>
-                <Text style={{ color: 'white' }}>Nieuw probleem</Text>
-              </Button>}
-            {pickingOnMap &&
-              <Button full primary onPress={this.confirmLocation}>
-                <Text style={{ color: 'white' }}>Plaats bevestigen</Text>
-              </Button>
-            }
-          </FooterTab>
-        </Footer>
       </Container >
     )
   }
