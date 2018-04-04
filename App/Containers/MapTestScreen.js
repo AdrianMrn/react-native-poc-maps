@@ -26,8 +26,7 @@ const INITIAL_STATE = {
   description: '',
   newMarker: { title: 'Nieuwe locatie', latitude: null, longitude: null, render: false },
   showErrors: false,
-  imageSource: null,
-  imageData: null
+  imageSource: null
 }
 
 class MapTestScreen extends Component {
@@ -134,52 +133,25 @@ class MapTestScreen extends Component {
       title: 'Foto kiezen',
       cameraType: 'back',
       mediaType: 'photo',
-      maxWidth: 400,
-      maxHeight: 400,
-      storageOptions: {
-        skipBackup: true,
-        cameraRoll: true,
-        waitUntilSaved: true,
-      }
-      
+      maxWidth: 1280,
+      maxHeight: 1280,
     }, (response) => {
-      console.log('Response = ', response);
-
       if (response.didCancel) {
-        Toast.show({
-          text: 'User cancelled image picker',
-          position: 'top',
-          buttonText: 'OK',
-          duration: 7000,
-          type: 'danger',
-        });
       }
       else if (response.error) {
-        Toast.show({
-          text: 'ImagePicker Error: ' + JSON.stringify(response[error]),
-          position: 'top',
-          buttonText: 'OK',
-          duration: 7000,
-          type: 'danger',
-        });
       }
       else {
         const source = { uri: response.uri };
-        // You can also display the image using data:
-        // let source = { uri: 'data:image/jpeg;base64,' + response.data };
-        Toast.show({
-          text: 'should have worked',
-          position: 'top',
-          buttonText: 'OK',
-          duration: 7000,
-          type: 'danger',
-        });
-
         this.setState({
-          imageSource: source,
-          imageData: { uri: response.data },
+          imageSource: source
         });
       }
+    });
+  }
+
+  deleteImage = () => {
+    this.setState({
+      imageSource: null
     });
   }
 
@@ -193,13 +165,15 @@ class MapTestScreen extends Component {
     if (!this.state.pickingOnMap) {
       return (
         <Button rounded primary onPress={this.startPickingOnMap} style={styles.actionButton}>
-          <Text style={{ color: 'white', fontSize: 16, textAlign: 'center' }}>Nieuw probleem</Text>
+          <Text style={{ color: 'white', fontSize: 16, textAlign: 'center'}}>Nieuw probleem</Text>
+          <Icon name='ios-add' style={{ marginLeft: 0, }} />
         </Button>
       );
     } else {
       return (
-        <Button rounded primary onPress={this.confirmLocation} style={styles.actionButton}>
+        <Button rounded success onPress={this.confirmLocation} style={styles.actionButton}>
           <Text style={{ color: 'white', fontSize: 16, textAlign: 'center' }}>Plaats bevestigen</Text>
+          <Icon name='ios-checkmark' style={{ marginLeft: 0, }} />
         </Button>
       );
     }
@@ -207,7 +181,7 @@ class MapTestScreen extends Component {
 
   submitProblem = () => {
     // future: need type toggle (Suggestie/Probleem)
-    const { title, description, address, newMarker, imageSource, imageData } = this.state;
+    const { title, description, address, newMarker, imageSource } = this.state;
 
     if (title && (newMarker.latitude || address)) {
       this.setState({ loading: true });
@@ -220,7 +194,7 @@ class MapTestScreen extends Component {
         coords_lat: newMarker.latitude,
         coords_lon: newMarker.longitude,
         image: imageSource
-      }).then((response) => {
+      }).then(() => {
         this.abortAddProblem();
         this.getLocations();
       })
@@ -265,6 +239,7 @@ class MapTestScreen extends Component {
               submitProblem={this.submitProblem}
               onInputChange={this.onInputChange}
               startPickingImage={this.startPickingImage}
+              deleteImage={this.deleteImage}
               address={address}
               title={title}
               description={description}

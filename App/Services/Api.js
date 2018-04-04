@@ -13,14 +13,17 @@ const create = (baseURL = 'https://fluxit.be/react/nativemaps/wp-json/') => {
   //
   // Create and configure an apisauce-based api object.
   //
+  // future: place this in an .env or whatever. I know I shouldn't be placing this here, please don't steal it thanks
+  const auth = 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczpcL1wvZmx1eGl0LmJlXC9yZWFjdFwvbmF0aXZlbWFwcyIsImlhdCI6MTUyMjMxMzU4NywibmJmIjoxNTIyMzEzNTg3LCJleHAiOjE1MjI5MTgzODcsImRhdGEiOnsidXNlciI6eyJpZCI6IjIifX19.OoKmeSIUagYHgD68iWisz_tyoncy5AsbJFNEu-27Tqg';
+
   const api = apisauce.create({
     // base URL is read from the "constructor"
     baseURL,
     // here are some default headers
     headers: {
       'Cache-Control': 'no-cache',
-      'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczpcL1wvZmx1eGl0LmJlXC9yZWFjdFwvbmF0aXZlbWFwcyIsImlhdCI6MTUyMjMxMzU4NywibmJmIjoxNTIyMzEzNTg3LCJleHAiOjE1MjI5MTgzODcsImRhdGEiOnsidXNlciI6eyJpZCI6IjIifX19.OoKmeSIUagYHgD68iWisz_tyoncy5AsbJFNEu-27Tqg',
-    }, // future: place this in an .env or whatever. I know I shouldn't be placing this here, please don't steal it thanks
+      'Authorization': auth,
+    },
     // 10 second timeout...
     timeout: 10000
   })
@@ -49,57 +52,54 @@ const create = (baseURL = 'https://fluxit.be/react/nativemaps/wp-json/') => {
     }
   });
 
-  const createSuggestie = (suggestie) => api
-    // create the post with a title
-    .post('wp/v2/suggesties', { title: `${suggestie.type}: ${capitaliseFirstLetter(suggestie.titel)}`, status: 'publish' })
-    .then((response) => {
-      if (response.ok) {
-        return (
-          // use the id we got back to edit it to include the custom fields
-          api.post(`acf/v3/suggesties/${response.data.id}`, { fields: suggestie })
-            .then((responseAcf) => {
-              if (responseAcf.ok) {
-                if (suggestie.image) {
-                  // add the image
-                  console.log(suggestie.image.uri);
-                  /* const imageUri = RNFetchBlob.wrap(suggestie.image.uri) */
-                  const imageUri = `RNFetchBlob-${suggestie.image.uri}`
-                  console.log(imageUri);
-                  RNFetchBlob.fetch('post', `${baseURL}wp/v2/media`,
-                    {
-                      'Content-Type': 'image/jpeg',
-                      'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczpcL1wvZmx1eGl0LmJlXC9yZWFjdFwvbmF0aXZlbWFwcyIsImlhdCI6MTUyMjMxMzU4NywibmJmIjoxNTIyMzEzNTg3LCJleHAiOjE1MjI5MTgzODcsImRhdGEiOnsidXNlciI6eyJpZCI6IjIifX19.OoKmeSIUagYHgD68iWisz_tyoncy5AsbJFNEu-27Tqg',
-                      'Content-Disposition': 'attachment; filename="photo.jpg"'
-                    }
-                    , imageUri) // imageUri = RNFetchBlob.wrap(imageUri);
-                    .then((response) => {
-                      console.log(response); // returns a 201 response with id of the attached media
-                    });
-
-                  /* api.post(`wp/v2/media/`, { imageUri }, {
-                    headers: {
-                      'Content-Type': 'image/jpeg',
-                      'Content-Disposition': `multipart/form-data; filename=photo.jpg`,
-                    }
-                  }).then(res => {
-                    console.log(res)
-                    return true;
-                  }); */
-                } else {
-                  console.log("image adding failed");
-                  return true;
-                }
-              } else {
-                // future: show user an error message?
-                return true;
-              }
-            })
-        )
+  // creating callback hell
+  const createSuggestie = (suggestie) => {
+    return new Promise((resolve) => {
+      if (suggestie.image) {
+        const imageUri = `RNFetchBlob-${suggestie.image.uri}`
+        uploadImage(imageUri, (remoteImageURL) => {
+          createPostWithACF(suggestie, remoteImageURL, () => {
+            resolve();
+          });
+        });
       } else {
-        // future: show user an error message?
-        return true;
+        createPostWithACF(suggestie, null, () => {
+          resolve();
+        });
       }
     });
+  }
+  const uploadImage = (imageUri, next) => {
+    RNFetchBlob.fetch('post', `${baseURL}wp/v2/media`,
+      {
+        'Authorization': auth,
+        'Content-Type': 'image/jpeg',
+        'Content-Disposition': 'attachment; filename="photo.jpg"'
+      }
+      , imageUri)
+      .then((responseImage) => {
+        responseImageData = JSON.parse(responseImage.data);
+        next(responseImageData.guid.rendered);
+      })
+      .catch(() => {
+        next(null);
+      })
+  }
+  const createPostWithACF = (suggestie, remoteImageURL, next) => {
+    api.post('wp/v2/suggesties', { title: `${suggestie.type}: ${capitaliseFirstLetter(suggestie.titel)}`, status: 'publish' })
+      .then((response) => {
+        if (response.ok) {
+          // use the id we got back to edit it to include the custom fields
+          api.post(`acf/v3/suggesties/${response.data.id}`, { fields: { ...suggestie, imageuri: remoteImageURL } })
+            .then((responseAcf) => {
+              next();
+            })
+        } else {
+          // future: show user an error message?
+          next();
+        }
+      });
+  }
 
   const googleApiKey = 'AIzaSyAvDH-7WmIYg__JkL4CPu9TqSbj3sW-B_k'; // future: to .env or whatever. Please don't use this if you found it on GitHub k thanks :)
   const reverseGeocode = (position) => api

@@ -4,7 +4,7 @@ import { ScrollView, Image, View, TouchableOpacity, KeyboardAvoidingView } from 
 import RoundedButton from './RoundedButton'
 import styles from './Styles/NewProblemFormStyles'
 
-import { Container, Header, Title, Content, Footer, FooterTab, Button, Left, Right, Body, Icon, Text, Spinner, Form, Input, Item, Label, Thumbnail } from 'native-base';
+import { Container, Header, Title, Content, Footer, FooterTab, Button, Left, Right, Body, Icon, Text, Spinner, Form, Input, Item, Label, Badge } from 'native-base';
 
 export default class NewProblemForm extends React.Component {
   renderButton = () => {
@@ -25,7 +25,7 @@ export default class NewProblemForm extends React.Component {
   }
 
   render() {
-    const { startPickingOnMap, onInputChange, submitProblem, address, title, description, abortAddProblem, showErrors, imageSource, startPickingImage } = this.props;
+    const { startPickingOnMap, onInputChange, submitProblem, address, title, description, abortAddProblem, showErrors, imageSource, startPickingImage, deleteImage } = this.props;
     return (
       <Container>
         <Content padder>
@@ -62,13 +62,24 @@ export default class NewProblemForm extends React.Component {
               />
             </Item>
 
-            <Button primary onPress={startPickingImage} style={styles.addImageButton}>
-              <Icon name='md-images' />
-              <Text>Foto toevoegen</Text>
-            </Button>
-            {!!imageSource &&
-              <Image source={{ uri: imageSource.uri }} style={styles.imagePreview} />
-            }
+            <View style={styles.imageAddSection}>
+              {!imageSource &&
+                <Button primary onPress={startPickingImage}>
+                  <Icon name='md-images' />
+                  <Text>Foto toevoegen</Text>
+                </Button>
+              }
+              {!!imageSource &&
+                <View>
+                  <Image source={{ uri: imageSource.uri }} style={styles.imagePreview} />
+                  <TouchableOpacity style={styles.deleteImageContainer} onPress={deleteImage}>
+                    <Badge style={styles.deleteImageButton}>
+                      <Text>X</Text>
+                    </Badge>
+                  </TouchableOpacity>
+                </View>
+              }
+            </View>
 
           </Form>
         </Content>

@@ -75,11 +75,17 @@ export default StyleSheet.create({
   imagePreview: {
     width: Metrics.screenWidth - Metrics.doubleBaseMargin*2,
     height: Metrics.screenWidth - Metrics.doubleBaseMargin*2,
-    alignSelf: 'center',
-    marginBottom: Metrics.doubleBaseMargin,
   },
-  addImageButton: {
+  imageAddSection: {
     marginVertical: Metrics.doubleBaseMargin,
-    marginLeft: Metrics.baseMargin,
+    marginLeft: 15,
+  },
+  deleteImageContainer: {
+    position: 'absolute',
+    top: 5,
+    right: 10,
+  },
+  deleteImageButton: {
+    backgroundColor: '#14171a'
   },
 })

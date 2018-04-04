@@ -19,7 +19,7 @@ export default class MapTestCallout extends React.Component {
       <Callout style={Styles.callout}>
         <TouchableOpacity onPress={this.onPress}>
           <Text style={Styles.title}>{location.title}</Text>
-          <Text>{location.description}</Text>
+          <Text>{location.description || "Geen beschrijving beschikbaar" }</Text>
         </TouchableOpacity>
       </Callout>
     )
