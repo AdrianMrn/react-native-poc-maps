@@ -32,7 +32,6 @@ export default class NewProblemForm extends React.Component {
           <Button transparent onPress={abortAddProblem}>
             <Icon name='arrow-back' />
           </Button>
-          {/* <ScrollView showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="handled" style={styles.container}> */}
           <Form>
             <Item error={!address && showErrors}>
               <Label>Adres</Label>

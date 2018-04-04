@@ -8,6 +8,7 @@ const transform = response => {
             type: suggestie.acf.type,
             description: suggestie.acf.beschrijving,
             address: suggestie.acf.adres,
+            imageuri: suggestie.acf.imageuri,
         });
     });
 

@@ -11,5 +11,11 @@ export default StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 5,
     fontSize: 22,
+  },
+  image: {
+    width: (Metrics.screenWidth * 2/3) - 10,
+    height: (Metrics.screenWidth * 2/3) - 10,
+    alignSelf: 'center',
+    marginTop: Metrics.baseMargin
   }
 })
