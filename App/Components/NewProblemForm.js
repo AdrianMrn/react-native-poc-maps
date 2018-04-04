@@ -5,17 +5,8 @@ import RoundedButton from './RoundedButton'
 import styles from './Styles/NewProblemFormStyles'
 
 import { Container, Header, Title, Content, Footer, FooterTab, Button, Left, Right, Body, Icon, Text, Spinner, Form, Input, Item, Label, Thumbnail } from 'native-base';
-const ImagePicker = require('react-native-image-picker');
 
 export default class NewProblemForm extends React.Component {
-  constructor() {
-    super();
-
-    this.state = {
-      imageSource: null,
-    }
-  }
-
   renderButton = () => {
     const { loading, submitProblem } = this.props;
     if (loading) {
@@ -33,36 +24,8 @@ export default class NewProblemForm extends React.Component {
     }
   }
 
-  startPickingImage = () => {
-    ImagePicker.showImagePicker({
-      title: 'Foto kiezen',
-      cameraType: 'back',
-      mediaType: 'photo',
-    }, (response) => {
-      console.log('Response = ', response);
-
-      if (response.didCancel) {
-        console.log('User cancelled image picker');
-      }
-      else if (response.error) {
-        console.log('ImagePicker Error: ', response.error);
-      }
-      else if (response.customButton) {
-        console.log('User tapped custom button: ', response.customButton);
-      }
-      else {
-        let source = { uri: response.uri };
-        // You can also display the image using data:
-        // let source = { uri: 'data:image/jpeg;base64,' + response.data };
-        this.setState({
-          imageSource: source
-        });
-      }
-    });
-  }
-
   render() {
-    const { startPickingOnMap, onInputChange, submitProblem, address, title, description, abortAddProblem, showErrors } = this.props;
+    const { startPickingOnMap, onInputChange, submitProblem, address, title, description, abortAddProblem, showErrors, imageSource, startPickingImage } = this.props;
     return (
       <Container>
         <Content padder>
@@ -99,12 +62,12 @@ export default class NewProblemForm extends React.Component {
               />
             </Item>
 
-            <Button primary onPress={this.startPickingImage} style={styles.addImageButton}>
+            <Button primary onPress={startPickingImage} style={styles.addImageButton}>
               <Icon name='md-images' />
               <Text>Foto toevoegen</Text>
             </Button>
-            {!!this.state.imageSource &&
-              <Image source={{ uri: this.state.imageSource.uri }} style={styles.imagePreview} />
+            {!!imageSource &&
+              <Image source={{ uri: imageSource.uri }} style={styles.imagePreview} />
             }
 
           </Form>

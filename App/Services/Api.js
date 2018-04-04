@@ -48,21 +48,41 @@ const create = (baseURL = 'https://fluxit.be/react/nativemaps/wp-json/') => {
   });
 
   const createSuggestie = (suggestie) => api
+    // create the post with a title
     .post('wp/v2/suggesties', { title: `${suggestie.type}: ${capitaliseFirstLetter(suggestie.titel)}`, status: 'publish' })
     .then((response) => {
       if (response.ok) {
         return (
+          // use the id we got back to edit it to include the custom fields
           api.post(`acf/v3/suggesties/${response.data.id}`, { fields: suggestie })
-            .then((response) => {
-              if (response.ok) {
-                return response.data;
+            .then((responseAcf) => {
+              if (responseAcf.ok) {
+                if (suggestie.image) {
+                  // add the image
+                  const formData = new FormData();
+                  formData.append('file', suggestie.image.uri);
+                  console.log(formData);
+                  api.post(`wp/v2/media/`, { formData }, {
+                    headers: {
+                      'Content-Disposition': `form-data; filename=${suggestie.image.fileName}`,
+                    }
+                  }).then(res => {
+                    console.log(res)
+                    return true;
+                  });
+                } else {
+                  console.log("image adding failed");
+                  return true;
+                }
               } else {
-                // future: show error message?
+                // future: show user an error message?
+                return true;
               }
             })
         )
       } else {
-        // future: show error message?
+        // future: show user an error message?
+        return true;
       }
     });
 

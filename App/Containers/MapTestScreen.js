@@ -7,35 +7,42 @@ import API from '../Services/Api';
 const api = API.create();
 
 import { Container, Header, Title, Content, Footer, FooterTab, Button, Left, Right, Body, Icon, Text, Toast } from 'native-base';
+const ImagePicker = require('react-native-image-picker');
 
 import MapTest from '../Components/MapTest';
 import NewProblemForm from '../Components/NewProblemForm';
 import RoundedButton from '../Components/RoundedButton';
 import LocationSearch from '../Components/LocationSearch';
-
 // Styles
 import styles from './Styles/MapTestScreenStyle'
+
+const INITIAL_STATE = {
+  pickingOnMap: false,
+  showModal: false,
+  loading: false,
+  // form elements
+  address: '',
+  title: '',
+  description: '',
+  newMarker: { title: 'Nieuwe locatie', latitude: null, longitude: null, render: false },
+  showErrors: false,
+  imageSource: null,
+  imageData: null
+}
 
 class MapTestScreen extends Component {
   constructor() {
     super();
 
     this.state = {
-      pickingOnMap: false,
-      showModal: false,
       locations: [],
-      loading: false,
       userPosition: { latitude: null, longitude: null },
-      // form elements
-      address: '',
-      title: '',
-      description: '',
-      newMarker: { title: 'Nieuwe locatie', latitude: null, longitude: null, render: false },
-      showErrors: false,
+      // should be refreshed on form abort/submit
+      ...INITIAL_STATE
     }
   }
 
-  componentWillMount = () => {
+  componentDidMount = () => {
     this.getLocations();
   }
 
@@ -119,21 +126,60 @@ class MapTestScreen extends Component {
       ...this.state,
       [type]: text,
     });
-
     // future: if (type === address) { // address autocomplete }
+  }
+
+  startPickingImage = () => {
+    ImagePicker.showImagePicker({
+      title: 'Foto kiezen',
+      cameraType: 'back',
+      mediaType: 'photo',
+      maxWidth: 400,
+      maxHeight: 400,
+    }, (response) => {
+      console.log('Response = ', response);
+
+      if (response.didCancel) {
+        Toast.show({
+          text: 'User cancelled image picker',
+          position: 'top',
+          buttonText: 'OK',
+          duration: 7000,
+          type: 'danger',
+        });
+      }
+      else if (response.error) {
+        Toast.show({
+          text: 'ImagePicker Error: ' + JSON.stringify(response[error]),
+          position: 'top',
+          buttonText: 'OK',
+          duration: 7000,
+          type: 'danger',
+        });
+      }
+      else {
+        const source = { uri: response.uri };
+        // You can also display the image using data:
+        // let source = { uri: 'data:image/jpeg;base64,' + response.data };
+        Toast.show({
+          text: 'should have worked',
+          position: 'top',
+          buttonText: 'OK',
+          duration: 7000,
+          type: 'danger',
+        });
+
+        this.setState({
+          imageSource: { uri: 'data:image/jpeg;base64,' + response.data },
+          imageData: response
+        });
+      }
+    });
   }
 
   abortAddProblem = () => {
     this.setState({
-      pickingOnMap: false,
-      showModal: false,
-      loading: false,
-      // form elements
-      address: '',
-      title: '',
-      description: '',
-      newMarker: { title: 'Nieuwe locatie', latitude: null, longitude: null, render: false },
-      showErrors: false,
+      ...INITIAL_STATE
     });
   }
 
@@ -155,18 +201,19 @@ class MapTestScreen extends Component {
 
   submitProblem = () => {
     // future: need type toggle (Suggestie/Probleem)
-    const { title, description, address, newMarker } = this.state;
+    const { title, description, address, newMarker, imageSource, imageData } = this.state;
 
     if (title && (newMarker.latitude || address)) {
       this.setState({ loading: true });
       // disable all inputs & button && show loading circle
       api.createSuggestie({
-        "titel": title,
-        "type": "Suggestie",
-        "beschrijving": description,
-        "adres": address,
-        "coords_lat": newMarker.latitude,
-        "coords_lon": newMarker.longitude
+        titel: title,
+        type: "Suggestie",
+        beschrijving: description,
+        adres: address,
+        coords_lat: newMarker.latitude,
+        coords_lon: newMarker.longitude,
+        image: imageSource
       }).then((response) => {
         this.abortAddProblem();
         this.getLocations();
@@ -185,7 +232,7 @@ class MapTestScreen extends Component {
   }
 
   render() {
-    const { showModal, pickingOnMap, address, title, description, newMarker, locations, loading, showErrors } = this.state;
+    const { showModal, pickingOnMap, address, title, description, newMarker, locations, loading, showErrors, imageSource } = this.state;
     return (
       <Container>
         <View style={styles.mainContainer}>
@@ -211,11 +258,13 @@ class MapTestScreen extends Component {
               startPickingOnMap={this.startPickingOnMap}
               submitProblem={this.submitProblem}
               onInputChange={this.onInputChange}
+              startPickingImage={this.startPickingImage}
               address={address}
               title={title}
               description={description}
               loading={loading}
               showErrors={showErrors}
+              imageSource={imageSource}
             />
           </Modal>
         </View>

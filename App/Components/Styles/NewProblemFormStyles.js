@@ -76,7 +76,7 @@ export default StyleSheet.create({
     width: Metrics.screenWidth - Metrics.doubleBaseMargin*2,
     height: Metrics.screenWidth - Metrics.doubleBaseMargin*2,
     alignSelf: 'center',
-    elevation: 5,
+    marginBottom: Metrics.doubleBaseMargin,
   },
   addImageButton: {
     marginVertical: Metrics.doubleBaseMargin,
