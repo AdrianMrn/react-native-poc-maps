@@ -17,13 +17,9 @@ export default class MapTestCallout extends React.Component {
     const { location } = this.props
     return (
       <Callout style={Styles.callout}>
-        <TouchableOpacity onPress={this.onPress}>
-          <Text style={Styles.title}>{location.title}</Text>
-          <Text>{location.description || "Geen beschrijving beschikbaar"}</Text>
-          {!!location.imageuri &&
-            <Image style={Styles.image} source={{ uri: location.imageuri }} />
-          }
-        </TouchableOpacity>
+        <Text style={Styles.title}>{location.title}</Text>
+        <Text>{location.description || "Geen beschrijving beschikbaar"}</Text>
+        <Image style={Styles.image} source={{ uri: location.imageuri }} onLoad={() => this.forceUpdate()} />
       </Callout>
     )
   }

@@ -54,8 +54,7 @@ const create = (baseURL = env.wpApiUri) => {
   const createSuggestie = (suggestie) => {
     return new Promise((resolve) => {
       if (suggestie.image) {
-        const imageUri = `RNFetchBlob-${suggestie.image.uri}`
-        uploadImage(imageUri, (remoteImageURL) => {
+        uploadImage(suggestie.image, (remoteImageURL) => {
           createPostWithACF(suggestie, remoteImageURL, () => {
             resolve();
           });
@@ -67,12 +66,13 @@ const create = (baseURL = env.wpApiUri) => {
       }
     });
   }
-  const uploadImage = (imageUri, next) => {
+  const uploadImage = (image, next) => {
+    const imageUri = `RNFetchBlob-${image.uri}`
     RNFetchBlob.fetch('post', `${baseURL}wp/v2/media`,
       {
         'Authorization': env.wpApiToken,
-        'Content-Type': 'image/jpeg',
-        'Content-Disposition': 'attachment; filename="photo.jpg"'
+        'Content-Type': image.type, //future: check for jpeg or png
+        'Content-Disposition': `attachment; filename=${image.name}`
       }
       , imageUri)
       .then((responseImage) => {

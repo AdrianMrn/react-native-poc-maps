@@ -26,7 +26,7 @@ const INITIAL_STATE = {
   description: '',
   newMarker: { title: 'Nieuwe locatie', latitude: null, longitude: null, render: false },
   showErrors: false,
-  imageSource: null
+  imageSource: null,
 }
 
 class MapTestScreen extends Component {
@@ -133,17 +133,18 @@ class MapTestScreen extends Component {
       title: 'Foto kiezen',
       cameraType: 'back',
       mediaType: 'photo',
-      maxWidth: 1280,
-      maxHeight: 1280,
+      maxWidth: 480,
+      maxHeight: 480,
+      quality: 0.5,
     }, (response) => {
       if (response.didCancel) {
       }
       else if (response.error) {
       }
       else {
-        const source = { uri: response.uri };
+        const source = { uri: response.uri, type: response.type, name: response.fileName };
         this.setState({
-          imageSource: source
+          imageSource: source,
         });
       }
     });
@@ -181,7 +182,7 @@ class MapTestScreen extends Component {
 
   submitProblem = () => {
     // future: need type toggle (Suggestie/Probleem)
-    const { title, description, address, newMarker, imageSource } = this.state;
+    const { title, description, address, newMarker, imageSource, imageType, imageName } = this.state;
 
     if (title && (newMarker.latitude || address)) {
       this.setState({ loading: true });
@@ -193,7 +194,7 @@ class MapTestScreen extends Component {
         adres: address,
         coords_lat: newMarker.latitude,
         coords_lon: newMarker.longitude,
-        image: imageSource
+        image: imageSource,
       }).then(() => {
         this.abortAddProblem();
         this.getLocations();
