@@ -1,12 +1,12 @@
 // a library to wrap and simplify api calls
 import apisauce from 'apisauce'
-
-import SuggestiesResponseHandler from '../Transforms/SuggestiesResponseHandler'
-
 import RNFetchBlob from 'react-native-fetch-blob';
 
+import SuggestiesResponseHandler from '../Transforms/SuggestiesResponseHandler'
+import env from './env';
+
 // our "constructor"
-const create = (baseURL = 'https://fluxit.be/react/nativemaps/wp-json/') => {
+const create = (baseURL = env.wpApiUri) => {
   // ------
   // STEP 1
   // ------
@@ -14,15 +14,13 @@ const create = (baseURL = 'https://fluxit.be/react/nativemaps/wp-json/') => {
   // Create and configure an apisauce-based api object.
   //
   // future: place this in an .env or whatever. I know I shouldn't be placing this here, please don't steal it thanks
-  const auth = 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczpcL1wvZmx1eGl0LmJlXC9yZWFjdFwvbmF0aXZlbWFwcyIsImlhdCI6MTUyMjMxMzU4NywibmJmIjoxNTIyMzEzNTg3LCJleHAiOjE1MjI5MTgzODcsImRhdGEiOnsidXNlciI6eyJpZCI6IjIifX19.OoKmeSIUagYHgD68iWisz_tyoncy5AsbJFNEu-27Tqg';
-
   const api = apisauce.create({
     // base URL is read from the "constructor"
     baseURL,
     // here are some default headers
     headers: {
       'Cache-Control': 'no-cache',
-      'Authorization': auth,
+      'Authorization': env.wpApiToken,
     },
     // 10 second timeout...
     timeout: 10000
@@ -72,7 +70,7 @@ const create = (baseURL = 'https://fluxit.be/react/nativemaps/wp-json/') => {
   const uploadImage = (imageUri, next) => {
     RNFetchBlob.fetch('post', `${baseURL}wp/v2/media`,
       {
-        'Authorization': auth,
+        'Authorization': env.wpApiToken,
         'Content-Type': 'image/jpeg',
         'Content-Disposition': 'attachment; filename="photo.jpg"'
       }
@@ -101,7 +99,7 @@ const create = (baseURL = 'https://fluxit.be/react/nativemaps/wp-json/') => {
       });
   }
 
-  const googleApiKey = 'AIzaSyAvDH-7WmIYg__JkL4CPu9TqSbj3sW-B_k'; // future: to .env or whatever. Please don't use this if you found it on GitHub k thanks :)
+  const googleApiKey = env.googleApiKey; // future: to .env or whatever. Please don't use this if you found it on GitHub k thanks :)
   const reverseGeocode = (position) => api
     .post(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${position.latitude},${position.longitude}&key=${googleApiKey}`)
     .then((response) => {
