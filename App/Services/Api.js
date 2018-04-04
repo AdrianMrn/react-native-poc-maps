@@ -3,6 +3,8 @@ import apisauce from 'apisauce'
 
 import SuggestiesResponseHandler from '../Transforms/SuggestiesResponseHandler'
 
+import RNFetchBlob from 'react-native-fetch-blob';
+
 // our "constructor"
 const create = (baseURL = 'https://fluxit.be/react/nativemaps/wp-json/') => {
   // ------
@@ -59,17 +61,30 @@ const create = (baseURL = 'https://fluxit.be/react/nativemaps/wp-json/') => {
               if (responseAcf.ok) {
                 if (suggestie.image) {
                   // add the image
-                  const formData = new FormData();
-                  formData.append('file', suggestie.image.uri);
-                  console.log(formData);
-                  api.post(`wp/v2/media/`, { formData }, {
+                  console.log(suggestie.image.uri);
+                  /* const imageUri = RNFetchBlob.wrap(suggestie.image.uri) */
+                  const imageUri = `RNFetchBlob-${suggestie.image.uri}`
+                  console.log(imageUri);
+                  RNFetchBlob.fetch('post', `${baseURL}wp/v2/media`,
+                    {
+                      'Content-Type': 'image/jpeg',
+                      'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczpcL1wvZmx1eGl0LmJlXC9yZWFjdFwvbmF0aXZlbWFwcyIsImlhdCI6MTUyMjMxMzU4NywibmJmIjoxNTIyMzEzNTg3LCJleHAiOjE1MjI5MTgzODcsImRhdGEiOnsidXNlciI6eyJpZCI6IjIifX19.OoKmeSIUagYHgD68iWisz_tyoncy5AsbJFNEu-27Tqg',
+                      'Content-Disposition': 'attachment; filename="photo.jpg"'
+                    }
+                    , imageUri) // imageUri = RNFetchBlob.wrap(imageUri);
+                    .then((response) => {
+                      console.log(response); // returns a 201 response with id of the attached media
+                    });
+
+                  /* api.post(`wp/v2/media/`, { imageUri }, {
                     headers: {
-                      'Content-Disposition': `form-data; filename=${suggestie.image.fileName}`,
+                      'Content-Type': 'image/jpeg',
+                      'Content-Disposition': `multipart/form-data; filename=photo.jpg`,
                     }
                   }).then(res => {
                     console.log(res)
                     return true;
-                  });
+                  }); */
                 } else {
                   console.log("image adding failed");
                   return true;

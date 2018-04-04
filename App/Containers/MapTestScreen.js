@@ -136,6 +136,12 @@ class MapTestScreen extends Component {
       mediaType: 'photo',
       maxWidth: 400,
       maxHeight: 400,
+      storageOptions: {
+        skipBackup: true,
+        cameraRoll: true,
+        waitUntilSaved: true,
+      }
+      
     }, (response) => {
       console.log('Response = ', response);
 
@@ -170,8 +176,8 @@ class MapTestScreen extends Component {
         });
 
         this.setState({
-          imageSource: { uri: 'data:image/jpeg;base64,' + response.data },
-          imageData: response
+          imageSource: source,
+          imageData: { uri: response.data },
         });
       }
     });
