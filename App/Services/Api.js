@@ -44,11 +44,13 @@ const create = (baseURL = env.wpApiUri) => {
     return string.charAt(0).toUpperCase() + string.slice(1);
   }
 
-  const getSuggesties = () => api.get('acf/v3/suggesties?per_page=100').then((response) => {
-    if (response.ok) {
-      return SuggestiesResponseHandler(response);
-    }
-  });
+  const getSuggesties = () => api
+    .get('acf/v3/suggesties?per_page=100')
+    .then((response) => {
+      if (response.ok) {
+        return SuggestiesResponseHandler(response);
+      }
+    });
 
   // creating callback hell
   const createSuggestie = (suggestie) => {

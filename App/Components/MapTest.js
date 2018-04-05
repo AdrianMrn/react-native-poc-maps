@@ -119,7 +119,7 @@ class MapTest extends React.Component {
     * presses your callout.
     *************************************************************/
 
-    console.tron.log(location) // Reactotron
+    /* console.tron.log(location) */ // Reactotron
   }
 
   renderMapMarkers(location) {

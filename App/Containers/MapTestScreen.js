@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { ScrollView, View, Modal } from 'react-native'
+import { ScrollView, View, Modal, AsyncStorage } from 'react-native'
 import { connect } from 'react-redux'
 // Add Actions - replace 'Your' with whatever your reducer is called :)
 // import YourActions from '../Redux/YourRedux'
@@ -32,6 +32,15 @@ const INITIAL_STATE = {
 class MapTestScreen extends Component {
   constructor() {
     super();
+    
+    try {
+      AsyncStorage.getItem('onboardingDone', (err, value) => {
+        //this.props.navigation.navigate('OnboardingScreen'); //future: get rid of this line!!
+        if (value !== 'yes') {
+          this.props.navigation.navigate('OnboardingScreen');
+        }
+      });
+    } catch (error) { }
 
     this.state = {
       locations: [],
@@ -62,7 +71,7 @@ class MapTestScreen extends Component {
   startPickingOnMap = () => {
     Toast.show({
       text: 'Duw op de kaart om een plaats te kiezen!',
-      position: 'top',
+      position: 'bottom',
       buttonText: 'OK',
       duration: 7000
     });
@@ -166,7 +175,7 @@ class MapTestScreen extends Component {
     if (!this.state.pickingOnMap) {
       return (
         <Button rounded primary onPress={this.startPickingOnMap} style={styles.actionButton}>
-          <Text style={{ color: 'white', fontSize: 16, textAlign: 'center'}}>Nieuw probleem</Text>
+          <Text style={{ color: 'white', fontSize: 16, textAlign: 'center' }}>Nieuw</Text>
           <Icon name='ios-add' style={{ marginLeft: 0, }} />
         </Button>
       );
@@ -198,6 +207,12 @@ class MapTestScreen extends Component {
       }).then(() => {
         this.abortAddProblem();
         this.getLocations();
+        Toast.show({
+          text: 'Suggestie toegevoegd',
+          position: 'top',
+          buttonText: 'OK',
+          duration: 5000,
+        });
       })
     } else {
       // toast shows below modal: https://github.com/GeekyAnts/NativeBase/issues/985
@@ -250,7 +265,7 @@ class MapTestScreen extends Component {
             />
           </Modal>
         </View>
-      </Container >
+      </Container>
     )
   }
 }

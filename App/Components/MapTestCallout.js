@@ -19,7 +19,7 @@ export default class MapTestCallout extends React.Component {
       <Callout style={Styles.callout}>
         <Text style={Styles.title}>{location.title}</Text>
         <Text>{location.description || "Geen beschrijving beschikbaar"}</Text>
-        <Image style={Styles.image} source={{ uri: location.imageuri }} onLoad={() => this.forceUpdate()} />
+        <Image style={Styles.image} source={{ uri: location.imageuri }} />
       </Callout>
     )
   }
