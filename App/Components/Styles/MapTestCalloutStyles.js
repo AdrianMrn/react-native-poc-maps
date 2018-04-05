@@ -16,6 +16,6 @@ export default StyleSheet.create({
     width: (Metrics.screenWidth * 2/3) - 10,
     height: (Metrics.screenWidth * 2/3) - 10,
     alignSelf: 'center',
-    marginTop: Metrics.baseMargin
+    marginVertical: Metrics.baseMargin
   }
 })
