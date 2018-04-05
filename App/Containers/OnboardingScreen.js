@@ -39,7 +39,7 @@ class OnboardingScreen extends Component {
         DoneButtonComponent={this.Done}
         pages={[
           {
-            backgroundColor: '#fff',
+            backgroundColor: nativeBaseColors.brandPrimary,
             image: <Text>logo</Text>,
             title: 'Smartcity Bewonersinput',
             subtitle: 'Laat je stad weten wat jij anders wilt!',
@@ -51,7 +51,7 @@ class OnboardingScreen extends Component {
             subtitle: 'Stap 1: Kies een plaats',
           },
           {
-            backgroundColor: nativeBaseColors.brandPrimary,
+            backgroundColor: nativeBaseColors.brandInfo,
             image: <Icon style={{ color: '#fff', fontSize: 100 }} name='ios-list-outline' />,
             title: 'Details',
             subtitle: 'Stap 2: Vervolledig je suggestie en voeg eventueel een foto toe',

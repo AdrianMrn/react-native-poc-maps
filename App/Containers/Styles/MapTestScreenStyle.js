@@ -33,5 +33,13 @@ export default StyleSheet.create({
     color: Colors.coal,
     fontSize: 16,
     textAlign: 'center'
+  },
+  infoButton: {
+    position: 'absolute',
+    left: 0,
+    right: 30,
+    top: 30,
+    justifyContent: 'center',
+    alignItems: 'flex-end',
   }
 })

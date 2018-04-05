@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { ScrollView, View, Modal, AsyncStorage } from 'react-native'
+import { ScrollView, View, Modal, AsyncStorage, TouchableOpacity } from 'react-native'
 import { connect } from 'react-redux'
 // Add Actions - replace 'Your' with whatever your reducer is called :)
 // import YourActions from '../Redux/YourRedux'
@@ -8,6 +8,7 @@ const api = API.create();
 
 import { Container, Header, Title, Content, Footer, FooterTab, Button, Left, Right, Body, Icon, Text, Toast } from 'native-base';
 const ImagePicker = require('react-native-image-picker');
+import nativeBaseColors from '../../native-base-theme/variables/commonColor';
 
 import MapTest from '../Components/MapTest';
 import NewProblemForm from '../Components/NewProblemForm';
@@ -238,6 +239,9 @@ class MapTestScreen extends Component {
             newMarker={newMarker}
             locations={locations}
           />
+          <TouchableOpacity style={styles.infoButton} onPress={() => this.props.navigation.navigate('OnboardingScreen')}>
+            <Icon style={{color:nativeBaseColors.brandPrimary}} name='ios-information-circle' />
+          </TouchableOpacity>
           {pickingOnMap &&
             <View style={styles.hintContainer}>
               <Text style={styles.hintText}>Duw op de kaart om een plaats te kiezen</Text>

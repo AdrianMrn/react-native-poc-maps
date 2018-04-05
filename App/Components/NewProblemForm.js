@@ -17,7 +17,7 @@ export default class NewProblemForm extends React.Component {
       );
     } else {
       return (
-        <Button full primary onPress={submitProblem}>
+        <Button full success onPress={submitProblem}>
           <Text style={{ color: 'white', fontSize: 16 }}>Bevestigen</Text>
         </Button>
       );
