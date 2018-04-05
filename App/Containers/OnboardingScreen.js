@@ -34,7 +34,7 @@ class OnboardingScreen extends Component {
       <Onboarding
         onDone={() => this.onboardingDone()}
         onSkip={() => this.onboardingDone()}
-        skipLabel={"Overslagen"}
+        skipLabel={"Overslaan"}
         nextLabel={"Volgende"}
         DoneButtonComponent={this.Done}
         pages={[

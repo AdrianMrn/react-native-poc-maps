@@ -73,7 +73,7 @@ const create = (baseURL = env.wpApiUri) => {
     RNFetchBlob.fetch('post', `${baseURL}wp/v2/media`,
       {
         'Authorization': env.wpApiToken,
-        'Content-Type': image.type, //future: check for jpeg or png
+        'Content-Type': image.type,
         'Content-Disposition': `attachment; filename=${image.name}`
       }
       , imageUri)
