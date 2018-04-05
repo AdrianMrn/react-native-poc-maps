@@ -36,7 +36,6 @@ class MapTestScreen extends Component {
     
     try {
       AsyncStorage.getItem('onboardingDone', (err, value) => {
-        //this.props.navigation.navigate('OnboardingScreen'); //future: get rid of this line!!
         if (value !== 'yes') {
           this.props.navigation.navigate('OnboardingScreen');
         }
@@ -196,7 +195,7 @@ class MapTestScreen extends Component {
 
     if (title && (newMarker.latitude || address)) {
       this.setState({ loading: true });
-      // disable all inputs & button && show loading circle
+      // future: timeout after 10s and show error?
       api.createSuggestie({
         titel: title,
         type: "Suggestie",
