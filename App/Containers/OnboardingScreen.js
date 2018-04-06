@@ -4,6 +4,8 @@ import { connect } from 'react-redux'
 import { Icon } from 'native-base';
 // Add Actions - replace 'Your' with whatever your reducer is called :)
 // import YourActions from '../Redux/YourRedux'
+import Images from '../Themes/Images';
+import Colors from '../Themes/Colors';
 
 // Styles
 import styles from './Styles/OnboardingScreenStyle'
@@ -34,33 +36,33 @@ class OnboardingScreen extends Component {
       <Onboarding
         onDone={() => this.onboardingDone()}
         onSkip={() => this.onboardingDone()}
-        skipLabel={"Overslaan"}
+        showSkip={false}
         nextLabel={"Volgende"}
         DoneButtonComponent={this.Done}
         pages={[
           {
-            backgroundColor: nativeBaseColors.brandPrimary,
-            image: <Text>logo</Text>,
-            title: 'Smartcity Bewonersinput',
-            subtitle: 'Laat je stad weten wat jij anders wilt!',
+            backgroundColor: '#fff',
+            image: <Image style={{ height: 200, width: 200 }} source={Images.CityInputLogo} />,
+            title: <Text style={styles.title}>Met <Text style={{fontWeight: '900', color:'#03a9f4'}}>City Input</Text> laat je je stad weten wat jij anders wilt!</Text>,
+            subtitle: <Text style={[styles.subtitle, {color:'rgba(0,0,0,0.5)'}]}>In de volgende stappen leggen we uit hoe de app werkt.</Text>,
           },
           {
-            backgroundColor: nativeBaseColors.brandDanger,
+            backgroundColor: Colors.cityInputColor,
             image: <Icon style={{ color: '#fff', fontSize: 100 }} name='ios-pin-outline' />,
-            title: 'Locatie',
-            subtitle: 'Stap 1: Kies een plaats',
+            title: 'Stap 1',
+            subtitle: <Text style={styles.subtitle}>Selecteer de <Text style={styles.boldText}>locatie</Text> van je suggestie op de kaart.</Text>,
           },
           {
-            backgroundColor: nativeBaseColors.brandInfo,
+            backgroundColor: Colors.cityInputColor,
             image: <Icon style={{ color: '#fff', fontSize: 100 }} name='ios-list-outline' />,
-            title: 'Details',
-            subtitle: 'Stap 2: Vervolledig je suggestie en voeg eventueel een foto toe',
+            title: 'Stap 2',
+            subtitle: <Text style={styles.subtitle}>Vervolledig je suggestie met wat <Text style={styles.boldText}>details</Text> en voeg eventueel een <Text style={styles.boldText}>foto</Text> toe.</Text>,
           },
           {
-            backgroundColor: nativeBaseColors.brandSuccess,
+            backgroundColor: Colors.cityInputColor,
             image: <Icon style={{ color: '#fff', fontSize: 100 }} name='ios-send-outline' />,
-            title: 'Verzenden',
-            subtitle: 'Stap 3: Stuur je suggestie door en bekijk ze op de kaart',
+            title: 'Stap 3',
+            subtitle: <Text style={styles.subtitle}><Text style={styles.boldText}>Verzend je suggestie</Text> en bekijk ze op de kaart.</Text>,
           },
         ]}
       />

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { ScrollView, View, Modal, AsyncStorage, TouchableOpacity } from 'react-native'
+import { ScrollView, View, Modal, AsyncStorage, TouchableOpacity, Platform } from 'react-native'
 import { connect } from 'react-redux'
 // Add Actions - replace 'Your' with whatever your reducer is called :)
 // import YourActions from '../Redux/YourRedux'
@@ -33,7 +33,7 @@ const INITIAL_STATE = {
 class MapTestScreen extends Component {
   constructor() {
     super();
-    
+
     try {
       AsyncStorage.getItem('onboardingDone', (err, value) => {
         if (value !== 'yes') {
@@ -45,7 +45,6 @@ class MapTestScreen extends Component {
     this.state = {
       locations: [],
       userPosition: { latitude: null, longitude: null },
-      // should be refreshed on form abort/submit
       ...INITIAL_STATE
     }
   }
@@ -71,7 +70,7 @@ class MapTestScreen extends Component {
   startPickingOnMap = () => {
     Toast.show({
       text: 'Duw op de kaart om een plaats te kiezen!',
-      position: 'bottom',
+      position: 'top',
       buttonText: 'OK',
       duration: 7000
     });
@@ -100,6 +99,10 @@ class MapTestScreen extends Component {
         longitude: position.coords.longitude,
       }
     });
+  }
+
+  calloutPress = (imageUri) => {
+    console.log(imageUri);
   }
 
   onMapPress = (coordinates) => {
@@ -235,15 +238,16 @@ class MapTestScreen extends Component {
           <MapTest
             onMapPress={this.onMapPress}
             setUserLocationInState={this.setUserLocationInState}
+            calloutPress={this.calloutPress}
             newMarker={newMarker}
             locations={locations}
           />
           <TouchableOpacity style={styles.infoButton} onPress={() => this.props.navigation.navigate('OnboardingScreen')}>
-            <Icon style={{color:nativeBaseColors.brandPrimary}} name='ios-information-circle' />
+            <Icon style={{ color: '#BDBDBD', fontSize: 45 }} name={Platform.OS === 'ios' ? 'ios-information-circle-outline' : 'md-information-circle'} />
           </TouchableOpacity>
           {pickingOnMap &&
             <View style={styles.hintContainer}>
-              <Text style={styles.hintText}>Duw op de kaart om een plaats te kiezen</Text>
+              <Text style={styles.hintText}>Druk op de kaart om een plaats te kiezen</Text>
             </View>
           }
           {this.renderButton()}

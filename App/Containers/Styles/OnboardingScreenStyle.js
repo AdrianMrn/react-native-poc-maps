@@ -5,14 +5,20 @@ import nativeBaseColors from '../../../native-base-theme/variables/commonColor';
 export default StyleSheet.create({
   ...ApplicationStyles.screen,
   title: {
-    color: nativeBaseColors.brandDanger,
     fontSize: 26,
-    textAlign:'center',
+    textAlign: 'center',
+    color: '#000',
+    marginHorizontal: Metrics.doubleBaseMargin,
+    paddingBottom: 15,
   },
   subtitle: {
-    color: nativeBaseColors.brandDanger,
+    color: 'rgba(255,255,255,0.7)',
     fontSize: 16,
-    textAlign:'center',
-    paddingHorizontal: Metrics.doubleBaseMargin
+    textAlign: 'center',
+    marginHorizontal: Metrics.doubleBaseMargin,
+  },
+  boldText: {
+    fontWeight: '900',
+    color: '#fff'
   }
 })

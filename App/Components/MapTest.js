@@ -114,16 +114,6 @@ class MapTest extends React.Component {
     // Fetch new data...
   }
 
-  calloutPress(location) {
-    /* ***********************************************************
-    * STEP 5
-    * Configure what will happen (if anything) when the user
-    * presses your callout.
-    *************************************************************/
-
-    /* console.tron.log(location) */ // Reactotron
-  }
-
   renderMapMarkers(location) {
     /* ***********************************************************
     * STEP 6
@@ -133,7 +123,7 @@ class MapTest extends React.Component {
     if (location.latitude && location.longitude) {
       return (
         <MapView.Marker key={`${location.title}${location.address}${location.latitude}`} coordinate={{ latitude: location.latitude, longitude: location.longitude }}>
-          <MapTestCallout location={location} onPress={this.calloutPress} />
+          <MapTestCallout location={location} onPress={this.props.calloutPress} />
         </MapView.Marker>
       )
     }
