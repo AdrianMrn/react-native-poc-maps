@@ -40,5 +40,5 @@ export default StyleSheet.create({
     bottom: 29,
     justifyContent: 'center',
     alignItems: 'flex-end',
-  }
+  },
 })

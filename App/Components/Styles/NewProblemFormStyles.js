@@ -88,4 +88,29 @@ export default StyleSheet.create({
   deleteImageButton: {
     backgroundColor: '#14171a'
   },
+  itemContainer: {
+    marginLeft: 15,
+    marginTop: Metrics.doubleBaseMargin,
+   /*  justifyContent: 'center',
+    alignItems: 'center', */
+  },
+  textareaLabel: {
+    color: '#575757',
+    fontSize: 17,
+  },
+  textStyle: {
+    padding: 5,
+    paddingLeft: 0,
+    fontSize: 17,
+    borderBottomColor: '#E0E0E0',
+    borderBottomWidth: 1
+  },
+  addressInput: {
+    width: Metrics.screenWidth - 80
+  },
+  editIcon: {
+    position: 'absolute',
+    right: 5,
+    top: 20,
+  }
 })

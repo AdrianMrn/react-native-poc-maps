@@ -6,14 +6,13 @@ import { connect } from 'react-redux'
 import API from '../Services/Api';
 const api = API.create();
 
-import { Container, Header, Title, Content, Footer, FooterTab, Button, Left, Right, Body, Icon, Text, Toast } from 'native-base';
+import { Container, Button, Icon, Text, Toast } from 'native-base';
 const ImagePicker = require('react-native-image-picker');
-import nativeBaseColors from '../../native-base-theme/variables/commonColor';
+import Colors from '../Themes/Colors';
 
 import MapTest from '../Components/MapTest';
 import NewProblemForm from '../Components/NewProblemForm';
-import RoundedButton from '../Components/RoundedButton';
-import LocationSearch from '../Components/LocationSearch';
+import MarkerDetail from '../Components/MarkerDetail';
 // Styles
 import styles from './Styles/MapTestScreenStyle'
 
@@ -28,6 +27,8 @@ const INITIAL_STATE = {
   newMarker: { title: 'Nieuwe locatie', latitude: null, longitude: null, render: false },
   showErrors: false,
   imageSource: null,
+  selectedLocation: null,
+  showDetailModal: false
 }
 
 class MapTestScreen extends Component {
@@ -66,6 +67,9 @@ class MapTestScreen extends Component {
   toggleModal = () => {
     this.setState({ showModal: !this.state.showModal })
   }
+  toggleDetailModal = () => {
+    this.setState({ showDetailModal: !this.state.showDetailModal })
+  }
 
   startPickingOnMap = () => {
     Toast.show({
@@ -103,6 +107,14 @@ class MapTestScreen extends Component {
 
   calloutPress = (imageUri) => {
     console.log(imageUri);
+  }
+  markerPress = (location) => {
+    if (!this.state.pickingOnMap) {
+      this.setState({
+        selectedLocation: location,
+        showDetailModal: true,
+      });
+    }
   }
 
   onMapPress = (coordinates) => {
@@ -177,16 +189,16 @@ class MapTestScreen extends Component {
   renderButton = () => {
     if (!this.state.pickingOnMap) {
       return (
-        <Button rounded primary onPress={this.startPickingOnMap} style={styles.actionButton}>
+        <Button rounded onPress={this.startPickingOnMap} style={[styles.actionButton, { backgroundColor: Colors.cityInputColor }]}>
           <Text style={{ color: 'white', fontSize: 16, textAlign: 'center' }}>Nieuw</Text>
-          <Icon name='ios-add' style={{ marginLeft: 0, }} />
+          <Icon name={Platform.OS === 'ios' ? 'ios-add' : 'md-add'} style={{ marginLeft: 0, }} />
         </Button>
       );
     } else {
       return (
         <Button rounded success onPress={this.confirmLocation} style={styles.actionButton}>
           <Text style={{ color: 'white', fontSize: 16, textAlign: 'center' }}>Plaats bevestigen</Text>
-          <Icon name='ios-checkmark' style={{ marginLeft: 0, }} />
+          <Icon name={Platform.OS === 'ios' ? 'ios-checkmark' : 'md-checkmark'} style={{ marginLeft: 0, }} />
         </Button>
       );
     }
@@ -231,7 +243,7 @@ class MapTestScreen extends Component {
   }
 
   render() {
-    const { showModal, pickingOnMap, address, title, description, newMarker, locations, loading, showErrors, imageSource } = this.state;
+    const { showModal, pickingOnMap, address, title, description, newMarker, locations, loading, showErrors, imageSource, showDetailModal, selectedLocation } = this.state;
     return (
       <Container>
         <View style={styles.mainContainer}>
@@ -239,6 +251,7 @@ class MapTestScreen extends Component {
             onMapPress={this.onMapPress}
             setUserLocationInState={this.setUserLocationInState}
             calloutPress={this.calloutPress}
+            markerPress={this.markerPress}
             newMarker={newMarker}
             locations={locations}
           />
@@ -251,7 +264,7 @@ class MapTestScreen extends Component {
             </View>
           }
           {this.renderButton()}
-          <Modal
+          <Modal // form
             animationType="slide"
             visible={showModal}
             onRequestClose={this.toggleModal}
@@ -270,6 +283,14 @@ class MapTestScreen extends Component {
               showErrors={showErrors}
               imageSource={imageSource}
             />
+          </Modal>
+          <Modal //Marker detail
+            animationType="slide"
+            visible={showDetailModal}
+            onRequestClose={this.toggleDetailModal}
+            transparent={true}
+          >
+            <MarkerDetail location={selectedLocation} closeDetail={this.toggleDetailModal} />
           </Modal>
         </View>
       </Container>

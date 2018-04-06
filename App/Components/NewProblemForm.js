@@ -1,23 +1,25 @@
 import React from 'react'
-import { ScrollView, Image, View, TouchableOpacity, KeyboardAvoidingView } from 'react-native'
+import { ScrollView, Image, View, TouchableOpacity, KeyboardAvoidingView, Platform } from 'react-native'
 
 import RoundedButton from './RoundedButton'
 import styles from './Styles/NewProblemFormStyles'
 
-import { Container, Header, Title, Content, Footer, FooterTab, Button, Left, Right, Body, Icon, Text, Spinner, Form, Input, Item, Label, Badge } from 'native-base';
+import Colors from '../Themes/Colors';
+
+import { Container, Content, Footer, FooterTab, Button, Icon, Text, Spinner, Form, Input, Item, Label, Badge, Textarea } from 'native-base';
 
 export default class NewProblemForm extends React.Component {
   renderButton = () => {
     const { loading, submitProblem } = this.props;
     if (loading) {
       return (
-        <Button full primary>
+        <Button full style={{ backgroundColor: Colors.cityInputColor }}>
           <Spinner color='white' />
         </Button>
       );
     } else {
       return (
-        <Button full primary onPress={submitProblem}>
+        <Button full style={{ backgroundColor: Colors.cityInputColor }} onPress={submitProblem}>
           <Text style={{ color: 'white', fontSize: 16 }}>Bevestigen</Text>
         </Button>
       );
@@ -30,41 +32,51 @@ export default class NewProblemForm extends React.Component {
       <Container>
         <Content padder>
           <Button transparent onPress={abortAddProblem}>
-            <Icon name='arrow-back' />
+            <Icon style={{ color: Colors.cityInputColor }} name={Platform.OS === 'ios' ? 'ios-arrow-back' : 'md-arrow-back'} />
           </Button>
           <Form>
-            <Item error={!address && showErrors}>
-              <Label>Adres</Label>
+
+            <View style={styles.itemContainer}>
+              <Label style={styles.textareaLabel}>Adres</Label>
               <Input
+                style={[styles.textStyle, styles.addressInput]}
                 onChangeText={text => { onInputChange(text, 'address') }}
                 value={address}
+                maxLength={200}
+                multiline
               />
-              <Button transparent onPress={startPickingOnMap}>
-                <Icon name='md-create' />
-              </Button>
-            </Item>
+              <TouchableOpacity style={styles.editIcon} onPress={() => startPickingOnMap()}>
+              <Icon style={{ color: Colors.cityInputColor }} name={Platform.OS === 'ios' ? 'ios-create' : 'md-create'} />
+              </TouchableOpacity>
+            </View>
 
-            <Item floatingLabel error={!title && showErrors}>
-              <Label>Titel</Label>
+            <View style={styles.itemContainer}>
+              <Label style={styles.textareaLabel}>Titel</Label>
               <Input
+                style={styles.textStyle}
                 onChangeText={text => { onInputChange(text, 'title') }}
                 value={title}
                 focus
+                maxLength={50}
+                multiline
               />
-            </Item>
+            </View>
 
-            <Item floatingLabel>
-              <Label>Beschrijving</Label>
+            <View style={styles.itemContainer}>
+              <Label style={styles.textareaLabel}>Beschrijving</Label>
               <Input
+                style={styles.textStyle}
                 onChangeText={text => { onInputChange(text, 'description') }}
                 value={description}
+                maxLength={5000}
+                multiline
               />
-            </Item>
+            </View>
 
             <View style={styles.imageAddSection}>
               {!imageSource &&
-                <Button primary onPress={startPickingImage}>
-                  <Icon name='md-images' />
+                <Button style={{ backgroundColor: Colors.cityInputColor }} onPress={startPickingImage}>
+                  <Icon style={{ marginRight: 0 }} name={Platform.OS === 'ios' ? 'ios-images' : 'md-images'} />
                   <Text>Foto toevoegen</Text>
                 </Button>
               }

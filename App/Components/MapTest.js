@@ -4,7 +4,7 @@ import MapView from 'react-native-maps'
 import MapTestCallout from './MapTestCallout'
 import Styles from './Styles/MapTestStyles'
 
-import nativeBaseColors from '../../native-base-theme/variables/commonColor';
+import Colors from '../Themes/Colors';
 
 // Generate this MapHelpers file with `ignite generate map-utilities`
 // You must have Ramda as a dev dependency to use this.
@@ -122,8 +122,8 @@ class MapTest extends React.Component {
     *************************************************************/
     if (location.latitude && location.longitude) {
       return (
-        <MapView.Marker key={`${location.title}${location.address}${location.latitude}`} coordinate={{ latitude: location.latitude, longitude: location.longitude }}>
-          <MapTestCallout location={location} onPress={this.props.calloutPress} />
+        <MapView.Marker onPress={() => this.props.markerPress(location)} key={`${location.title}${location.address}${location.latitude}`} coordinate={{ latitude: location.latitude, longitude: location.longitude }}>
+          {/* <MapTestCallout location={location} onPress={this.props.calloutPress} /> */}
         </MapView.Marker>
       )
     }
@@ -148,7 +148,7 @@ class MapTest extends React.Component {
               coordinate={{ latitude: newMarker.latitude, longitude: newMarker.longitude }}
               draggable
               onDragEnd={(e) => { onMapPress(e.nativeEvent.coordinate) }}
-              pinColor={nativeBaseColors.brandPrimary}
+              pinColor={Colors.cityInputColor}
             />
           }
         </MapView>
