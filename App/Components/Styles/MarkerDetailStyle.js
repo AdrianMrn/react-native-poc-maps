@@ -12,9 +12,9 @@ export default StyleSheet.create({
   },
   closePopup: {
     position: 'absolute',
-    right: 5,
-    top: 5,
-    padding: 5,
+    right: Metrics.baseMargin,
+    top: Metrics.baseMargin,
+    padding: Metrics.baseMargin,
   },
   address: {
     fontSize: 12,
@@ -29,18 +29,21 @@ export default StyleSheet.create({
     color: Colors.coal,
     textAlign: 'center',
     marginTop: Metrics.baseMargin,
-    marginHorizontal: Metrics.doubleBaseMargin,
+    marginHorizontal: Metrics.doubleBaseMargin * 2,
   },
   description: {
     fontSize: 16,
     color: Colors.charcoal,
     textAlign: 'center',
     marginTop: Metrics.baseMargin,
+    marginBottom: Metrics.doubleBaseMargin,
     marginHorizontal: Metrics.doubleBaseMargin,
   },
   image: {
-    width: Metrics.screenWidth,
-    height: Metrics.screenWidth,
+    alignSelf: 'center',
+    width: Metrics.screenWidth / 3,
+    height: Metrics.screenWidth / 3,
+    borderRadius: Metrics.screenWidth / 3,
     /* position: 'absolute',
     top: 0, */
     marginTop: Metrics.doubleBaseMargin
