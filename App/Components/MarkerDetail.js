@@ -2,13 +2,13 @@ import React, { Component } from 'react'
 import { View, TouchableWithoutFeedback, TouchableOpacity, ScrollView, Image, Platform } from 'react-native'
 import { Container, Text, Spinner, Badge, Icon } from 'native-base';
 import styles from './Styles/MarkerDetailStyle'
-import { Container, Content, Button, Icon, Text, Toast } from 'native-base';
 import Colors from '../Themes/Colors'
 
 export default class MarkerDetail extends Component {
   constructor() {
     super();
     this.state = {
+      showSpinner: true
     };
   }
 

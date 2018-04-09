@@ -31,11 +31,19 @@ export default class NewProblemForm extends React.Component {
     return (
       <Container>
         <Content padder>
-          <Button transparent onPress={abortAddProblem}>
-            <Icon style={{ color: Colors.cityInputColor }} name={Platform.OS === 'ios' ? 'ios-arrow-back' : 'md-arrow-back'} />
-          </Button>
-          <Form>
+          <View style={styles.header}>
+            <Button transparent onPress={abortAddProblem}>
+              <Icon style={{ color: Colors.cityInputColor }} name={Platform.OS === 'ios' ? 'ios-arrow-back' : 'md-arrow-back'} />
+            </Button>
+            {!imageSource &&
+              <Button style={styles.addImageButton} onPress={startPickingImage}>
+                <Icon style={{ marginRight: 0 }} name={Platform.OS === 'ios' ? 'ios-images' : 'md-images'} />
+                <Text>Foto toevoegen</Text>
+              </Button>
+            }
+          </View>
 
+          <Form>
             <View style={styles.itemContainer}>
               <Label style={styles.textareaLabel}>Adres</Label>
               <Input
@@ -74,12 +82,6 @@ export default class NewProblemForm extends React.Component {
             </View>
 
             <View style={styles.imageAddSection}>
-              {!imageSource &&
-                <Button style={{ backgroundColor: Colors.cityInputColor }} onPress={startPickingImage}>
-                  <Icon style={{ marginRight: 0 }} name={Platform.OS === 'ios' ? 'ios-images' : 'md-images'} />
-                  <Text>Foto toevoegen</Text>
-                </Button>
-              }
               {!!imageSource &&
                 <View>
                   <Image source={{ uri: imageSource.uri }} style={styles.imagePreview} />

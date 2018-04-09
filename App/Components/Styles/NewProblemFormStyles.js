@@ -7,74 +7,19 @@ export default StyleSheet.create({
     flex: 1,
     paddingTop: Metrics.section
   },
-  logo: {
-    height: Metrics.images.logo,
-    width: Metrics.images.logo,
-    resizeMode: 'contain',
-    marginTop: Metrics.doubleBaseMargin
-  },
-  buttonsContainer: {
+  header: {
+    marginTop: Metrics.doubleBaseMargin,
     flexDirection: 'row',
-    flex: 1
+    justifyContent: 'space-between'
   },
-  centered: {
-    alignItems: 'center'
-  },
-  componentButton: {
-    borderColor: Colors.border,
-    borderTopWidth: 1,
-    borderRightWidth: 1,
-    borderBottomWidth: 1
-  },
-  apiButton: {
-    borderColor: Colors.border,
-    borderRightWidth: 1,
-    borderBottomWidth: 1
-  },
-  usageButton: {
-    borderColor: Colors.border,
-    borderTopWidth: 1,
-    borderBottomWidth: 1
-  },
-  deviceButton: {
-    borderColor: Colors.border,
-    borderRightWidth: 1,
-    borderTopWidth: 1
-  },
-  sectionText: {
-    textAlign: 'center',
-    fontFamily: Fonts.base,
-    fontSize: 14,
-    marginHorizontal: Metrics.baseMargin,
-    lineHeight: 30,
-    marginVertical: Metrics.doubleBaseMargin,
-    color: Colors.charcoal
-  },
-  submitButton: {
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0,
-  },
-  banner: {
-    position: 'absolute',
-    width: Metrics.screenWidth,
-    backgroundColor: Colors.banner,
-    justifyContent: 'center',
-    alignItems: 'center',
-    bottom: 0,
-    left: 0,
-    right: 0,
-    height: 50
-  },
-  bannerLabel: {
-    ...Fonts.style.h5,
-    fontSize: 12,
-    color: Colors.snow
+  addImageButton: {
+    paddingTop: 0,
+    paddingBottom: 0,
+    backgroundColor: Colors.cityInputColor
   },
   imagePreview: {
-    width: Metrics.screenWidth - Metrics.doubleBaseMargin*2,
-    height: Metrics.screenWidth - Metrics.doubleBaseMargin*2,
+    width: Metrics.screenWidth - Metrics.doubleBaseMargin * 2,
+    height: Metrics.screenWidth - Metrics.doubleBaseMargin * 2,
   },
   imageAddSection: {
     marginVertical: Metrics.doubleBaseMargin,
@@ -88,11 +33,11 @@ export default StyleSheet.create({
   deleteImageButton: {
     backgroundColor: '#14171a'
   },
-  itemContainer: {
+  itemContainer:  {
     marginLeft: 15,
     marginTop: Metrics.doubleBaseMargin,
-   /*  justifyContent: 'center',
-    alignItems: 'center', */
+    /*  justifyContent: 'center',
+     alignItems: 'center', */
   },
   textareaLabel: {
     color: '#575757',
