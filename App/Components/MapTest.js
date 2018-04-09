@@ -122,9 +122,7 @@ class MapTest extends React.Component {
     *************************************************************/
     if (location.latitude && location.longitude) {
       return (
-        <MapView.Marker onPress={() => this.props.markerPress(location)} key={`${location.title}${location.address}${location.latitude}`} coordinate={{ latitude: location.latitude, longitude: location.longitude }}>
-          {/* <MapTestCallout location={location} onPress={this.props.calloutPress} /> */}
-        </MapView.Marker>
+        <MapView.Marker onPress={() => this.props.markerPress(location)} key={`${location.title}${location.address}${location.latitude}`} coordinate={{ latitude: location.latitude, longitude: location.longitude }} />
       )
     }
   }
@@ -141,7 +139,7 @@ class MapTest extends React.Component {
           onPress={(e) => { onMapPress(e.nativeEvent.coordinate) }}
           loadingEnabled
         >
-          {locations.map((location) => this.renderMapMarkers(location))}
+          {locations && locations.map((location) => this.renderMapMarkers(location))}
           {newMarker.render &&
             <MapView.Marker
               key={`${newMarker.title}${newMarker.address}${newMarker.latitude}`}

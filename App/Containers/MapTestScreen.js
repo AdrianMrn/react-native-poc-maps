@@ -58,6 +58,7 @@ class MapTestScreen extends Component {
     // future: load in on toggle background (focus)
     api.getSuggesties()
       .then((response) => {
+
         this.setState({
           locations: response
         });
@@ -105,9 +106,6 @@ class MapTestScreen extends Component {
     });
   }
 
-  calloutPress = (imageUri) => {
-    console.log(imageUri);
-  }
   markerPress = (location) => {
     if (!this.state.pickingOnMap) {
       this.setState({
@@ -250,7 +248,6 @@ class MapTestScreen extends Component {
           <MapTest
             onMapPress={this.onMapPress}
             setUserLocationInState={this.setUserLocationInState}
-            calloutPress={this.calloutPress}
             markerPress={this.markerPress}
             newMarker={newMarker}
             locations={locations}

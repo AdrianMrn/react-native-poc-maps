@@ -46,7 +46,7 @@ export default class NewProblemForm extends React.Component {
                 multiline
               />
               <TouchableOpacity style={styles.editIcon} onPress={() => startPickingOnMap()}>
-              <Icon style={{ color: Colors.cityInputColor }} name={Platform.OS === 'ios' ? 'ios-create' : 'md-create'} />
+                <Icon style={{ color: Colors.cityInputColor }} name={Platform.OS === 'ios' ? 'ios-create' : 'md-create'} />
               </TouchableOpacity>
             </View>
 
@@ -84,9 +84,7 @@ export default class NewProblemForm extends React.Component {
                 <View>
                   <Image source={{ uri: imageSource.uri }} style={styles.imagePreview} />
                   <TouchableOpacity style={styles.deleteImageContainer} onPress={deleteImage}>
-                    <Badge style={styles.deleteImageButton}>
-                      <Text>X</Text>
-                    </Badge>
+                    <Icon style={{ color: '#14171a' }} name={Platform.OS === 'ios' ? 'ios-close-circle-outline' : 'md-close-circle'} />
                   </TouchableOpacity>
                 </View>
               }

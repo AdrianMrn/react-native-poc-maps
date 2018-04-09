@@ -7,13 +7,21 @@ export default StyleSheet.create({
   },
   contentContainer: {
     backgroundColor: '#FFF',
+    borderTopWidth: 3,
+    borderColor: Colors.cityInputColor,
+  },
+  closePopup: {
+    position: 'absolute',
+    right: 5,
+    top: 5,
+    padding: 5,
   },
   address: {
     fontSize: 12,
     color: Colors.charcoal,
     textAlign: 'center',
     marginTop: Metrics.doubleBaseMargin,
-    marginHorizontal: Metrics.doubleBaseMargin,
+    marginHorizontal: 30,
   },
   title: {
     fontSize: 28,
@@ -34,7 +42,13 @@ export default StyleSheet.create({
     width: Metrics.screenWidth,
     height: Metrics.screenWidth,
     /* position: 'absolute',
-    bottom: 0, */
+    top: 0, */
     marginTop: Metrics.doubleBaseMargin
-  }
+  },
+  spinner: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    bottom: (Metrics.screenWidth / 2) - 40,
+  },
 })
