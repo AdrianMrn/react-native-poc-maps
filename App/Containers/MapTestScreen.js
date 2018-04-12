@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { ScrollView, View, Modal, AsyncStorage, TouchableOpacity, Platform } from 'react-native'
+import { ScrollView, View, Modal, AsyncStorage, TouchableOpacity, Platform, StatusBar } from 'react-native'
 import { connect } from 'react-redux'
 // Add Actions - replace 'Your' with whatever your reducer is called :)
 // import YourActions from '../Redux/YourRedux'
@@ -244,6 +244,7 @@ class MapTestScreen extends Component {
     const { showModal, pickingOnMap, address, title, description, newMarker, locations, loading, showErrors, imageSource, showDetailModal, selectedLocation } = this.state;
     return (
       <Container>
+        <StatusBar hidden={false} barStyle={Platform.OS === 'ios' ? 'dark-content' : 'light-content'} />
         <View style={styles.mainContainer}>
           <MapTest
             onMapPress={this.onMapPress}

@@ -39,19 +39,30 @@ export default StyleSheet.create({
     marginBottom: Metrics.doubleBaseMargin,
     marginHorizontal: Metrics.doubleBaseMargin,
   },
-  image: {
+  imageContainer: {
     alignSelf: 'center',
     width: Metrics.screenWidth / 3,
     height: Metrics.screenWidth / 3,
-    borderRadius: Metrics.screenWidth / 3,
-    /* position: 'absolute',
-    top: 0, */
+    borderRadius: Metrics.screenWidth / 6,
     marginTop: Metrics.doubleBaseMargin
+  },
+  image: {
+    borderRadius: Metrics.screenWidth / 6,
+    width: Metrics.screenWidth / 3,
+    height: Metrics.screenWidth / 3,
   },
   spinner: {
     position: 'absolute',
     left: 0,
     right: 0,
     bottom: (Metrics.screenWidth / 2) - 40,
+  },
+  contain: {
+    flex: 1,
+    alignSelf: 'center',
+    width: Metrics.screenWidth,
+    height: Metrics.screenWidth,
+    borderRadius: 0,
+    marginTop: 0
   },
 })

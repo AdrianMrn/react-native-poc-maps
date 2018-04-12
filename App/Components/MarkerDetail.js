@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import { View, TouchableWithoutFeedback, TouchableOpacity, ScrollView, Image, Platform } from 'react-native'
 import { Container, Text, Spinner, Badge, Icon } from 'native-base';
+import Lightbox from 'react-native-lightbox';
 import styles from './Styles/MarkerDetailStyle'
-import Colors from '../Themes/Colors'
+import { Colors, Metrics } from '../Themes'
 
 export default class MarkerDetail extends Component {
   constructor() {
@@ -21,6 +22,15 @@ export default class MarkerDetail extends Component {
   render() {
     const { closeDetail, location } = this.props;
     const { showSpinner } = this.state;
+    const activeProps = {
+      /* flex: 1, */
+      alignSelf: 'center',
+      width: Metrics.screenWidth,
+      height: Metrics.screenWidth,
+      borderRadius: 0,
+      marginTop: 0,
+      resizeMode: "contain",
+    }
 
     return (
       <Container>
@@ -33,11 +43,13 @@ export default class MarkerDetail extends Component {
             <Text style={styles.title}>{location.title}</Text>
             {
               !!location.imageuri &&
-              <View>
-              <Image style={styles.image} source={{ uri: location.imageuri }} onLoad={() => this.imageLoaded()} />
-              {showSpinner &&
-                <Spinner style={styles.spinner} color={Colors.cityInputColor} />
-              }
+              <View style={styles.imageContainer}>
+                <Lightbox onClose={() => { console.log("onClose") }} willClose={() => { console.log("willClose") }} activeProps={activeProps} underlayColor={'#fff'} navigator={this.props.navigation}>
+                  <Image resizeMode="cover" style={styles.image} source={{ uri: location.imageuri }} onLoad={() => this.imageLoaded()} />
+                </Lightbox>
+                {showSpinner &&
+                  <Spinner style={styles.spinner} color={Colors.cityInputColor} />
+                }
               </View>
             }
             <Text style={styles.address}>{location.address}</Text>

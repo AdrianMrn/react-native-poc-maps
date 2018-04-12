@@ -1,5 +1,5 @@
 import React from 'react'
-import { ScrollView, Image, View, TouchableOpacity, KeyboardAvoidingView, Platform } from 'react-native'
+import { ScrollView, Image, View, TouchableOpacity, Platform, SafeAreaView } from 'react-native'
 
 import RoundedButton from './RoundedButton'
 import styles from './Styles/NewProblemFormStyles'
@@ -31,18 +31,19 @@ export default class NewProblemForm extends React.Component {
     return (
       <Container>
         <Content padder>
-          <View style={styles.header}>
-            <Button transparent onPress={abortAddProblem}>
-              <Icon style={{ color: Colors.cityInputColor }} name={Platform.OS === 'ios' ? 'ios-arrow-back' : 'md-arrow-back'} />
-            </Button>
-            {!imageSource &&
-              <Button style={styles.addImageButton} onPress={startPickingImage}>
-                <Icon style={{ marginRight: 0 }} name={Platform.OS === 'ios' ? 'ios-images' : 'md-images'} />
-                <Text>Foto toevoegen</Text>
+          <SafeAreaView>
+            <View style={styles.header}>
+              <Button transparent onPress={abortAddProblem}>
+                <Icon style={{ color: Colors.cityInputColor }} name={Platform.OS === 'ios' ? 'ios-arrow-back' : 'md-arrow-back'} />
               </Button>
-            }
-          </View>
-
+              {!imageSource &&
+                <Button style={styles.addImageButton} onPress={startPickingImage}>
+                  <Icon style={{ marginRight: 0 }} name={Platform.OS === 'ios' ? 'ios-images' : 'md-images'} />
+                  <Text>Foto toevoegen</Text>
+                </Button>
+              }
+            </View>
+          </SafeAreaView>
           <Form>
             <View style={styles.itemContainer}>
               <Label style={styles.textareaLabel}>Adres</Label>
@@ -94,7 +95,6 @@ export default class NewProblemForm extends React.Component {
 
           </Form>
         </Content>
-
         <Footer>
           <FooterTab>
             {this.renderButton()}
