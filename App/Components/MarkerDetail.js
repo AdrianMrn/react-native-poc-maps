@@ -30,18 +30,18 @@ export default class MarkerDetail extends Component {
             <TouchableOpacity style={styles.closePopup} onPress={() => closeDetail()}>
               <Icon style={{ color: '#14171a' }} name={Platform.OS === 'ios' ? 'ios-close' : 'md-close'} />
             </TouchableOpacity>
-            <Text style={styles.address}>{location.address}</Text>
             <Text style={styles.title}>{location.title}</Text>
-            <Text style={styles.description}>{location.description}</Text>
             {
               !!location.imageuri &&
               <View>
-                <Image style={styles.image} source={{ uri: location.imageuri }} onLoad={() => this.imageLoaded()} />
-                {showSpinner &&
-                  <Spinner style={styles.spinner} color={Colors.cityInputColor} />
-                }
+              <Image style={styles.image} source={{ uri: location.imageuri }} onLoad={() => this.imageLoaded()} />
+              {showSpinner &&
+                <Spinner style={styles.spinner} color={Colors.cityInputColor} />
+              }
               </View>
             }
+            <Text style={styles.address}>{location.address}</Text>
+            <Text style={styles.description}>{location.description}</Text>
           </ScrollView >
         </View >
       </Container >
