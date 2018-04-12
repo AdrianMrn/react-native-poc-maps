@@ -62,7 +62,7 @@ class OnboardingScreen extends Component {
             backgroundColor: Colors.cityInputColor,
             image: <Icon style={{ color: '#fff', fontSize: 100 }} name='ios-send-outline' />,
             title: 'Stap 3',
-            subtitle: <Text style={styles.subtitle}><Text style={styles.boldText}>Verzend je suggestie</Text> en bekijk ze op de kaart.</Text>,
+            subtitle: <Text style={styles.subtitle}>Kijk je gegevens na, <Text style={styles.boldText}>verzend je suggestie</Text> en bekijk ze op de kaart.</Text>,
           },
         ]}
       />
