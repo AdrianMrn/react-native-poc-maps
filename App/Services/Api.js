@@ -81,7 +81,7 @@ const create = (baseURL = env.wpApiUri) => {
         responseImageData = JSON.parse(responseImage.data);
         next(responseImageData.guid.rendered);
       })
-      .catch(() => {
+      .catch((responseImage) => {
         next(null);
       })
   }

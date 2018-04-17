@@ -158,6 +158,11 @@ class MapTestScreen extends Component {
       maxWidth: 480,
       maxHeight: 480,
       quality: 0.5,
+      storageOptions: {
+        skipBackup: true,
+        cameraRoll: true,
+        waitUntilSaved: true,
+      }
     }, (response) => {
       if (response.didCancel) {
       }
