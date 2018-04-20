@@ -67,6 +67,16 @@
                ReferencedContainer = "container:CityInput.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "F56F2A03208A210D001F01C1"
+               BuildableName = "CityInputUITests.xctest"
+               BlueprintName = "CityInputUITests"
+               ReferencedContainer = "container:CityInput.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference

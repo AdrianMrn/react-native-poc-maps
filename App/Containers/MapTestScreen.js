@@ -271,6 +271,7 @@ class MapTestScreen extends Component {
             animationType="slide"
             visible={showModal}
             onRequestClose={this.toggleModal}
+            supportedOrientations={['portrait', 'landscape']}
           >
             <NewProblemForm
               abortAddProblem={this.abortAddProblem}
@@ -292,6 +293,7 @@ class MapTestScreen extends Component {
             visible={showDetailModal}
             onRequestClose={this.toggleDetailModal}
             transparent={true}
+            supportedOrientations={['portrait', 'landscape']}
           >
             <MarkerDetail location={selectedLocation} closeDetail={this.toggleDetailModal} />
           </Modal>

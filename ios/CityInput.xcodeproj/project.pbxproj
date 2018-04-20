@@ -64,6 +64,7 @@
 		E0EFD845AA3A4069A7C5AFE5 /* libRNVectorIcons.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7532CB99489F481C81038372 /* libRNVectorIcons.a */; };
 		E6DECC3DB35441098674D844 /* Entypo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 73BA2B3F9870431C8D65C5D3 /* Entypo.ttf */; };
 		EC2E001B8E4D4A3494BBFC0A /* Foundation.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 05DC8E9029E343FE82429D16 /* Foundation.ttf */; };
+		F56F2A07208A210D001F01C1 /* CityInputUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F56F2A06208A210D001F01C1 /* CityInputUITests.swift */; };
 		FBA059882517442E96462DB5 /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2FED602CE32C4703BD47B8B3 /* FontAwesome.ttf */; };
 /* End PBXBuildFile section */
 
@@ -327,6 +328,13 @@
 			remoteGlobalIDString = 5DBEB1501B18CEA900B34395;
 			remoteInfo = RNVectorIcons;
 		};
+		F56F2A09208A210D001F01C1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 83CBB9F71A601CBA00E9B192 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 13B07F861A680F5B00A75B9A;
+			remoteInfo = CityInput;
+		};
 		F5E9E7FA2085E3A6001E2A5F /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 146833FF1AC3E56700842450 /* React.xcodeproj */;
@@ -431,6 +439,9 @@
 		E1B49749DC3E4A299F58062D /* RNFetchBlob.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNFetchBlob.xcodeproj; path = "../node_modules/react-native-fetch-blob/ios/RNFetchBlob.xcodeproj"; sourceTree = "<group>"; };
 		E999E6E804324E8CBE45B988 /* Octicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Octicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Octicons.ttf"; sourceTree = "<group>"; };
 		F4605767377A4E57899FE83F /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialCommunityIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf"; sourceTree = "<group>"; };
+		F56F2A04208A210D001F01C1 /* CityInputUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CityInputUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		F56F2A06208A210D001F01C1 /* CityInputUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityInputUITests.swift; sourceTree = "<group>"; };
+		F56F2A08208A210D001F01C1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -484,6 +495,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		2D02E48D1E0B4A5D006451C7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F56F2A01208A210D001F01C1 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -694,6 +712,7 @@
 				13B07FAE1A68108700A75B9A /* CityInput */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* CityInputTests */,
+				F56F2A05208A210D001F01C1 /* CityInputUITests */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				6A2F366F789748DF868D1FAE /* Resources */,
 				F55FF90D207F8191004751BF /* Recovered References */,
@@ -710,6 +729,7 @@
 				00E356EE1AD99517003FC87E /* CityInputTests.xctest */,
 				2D02E47B1E0B4A5D006451C7 /* CityInput-tvOS.app */,
 				2D02E4901E0B4A5D006451C7 /* CityInput-tvOSTests.xctest */,
+				F56F2A04208A210D001F01C1 /* CityInputUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -782,6 +802,15 @@
 				F55FF940207F8194004751BF /* libRNFetchBlob.a */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		F56F2A05208A210D001F01C1 /* CityInputUITests */ = {
+			isa = PBXGroup;
+			children = (
+				F56F2A06208A210D001F01C1 /* CityInputUITests.swift */,
+				F56F2A08208A210D001F01C1 /* Info.plist */,
+			);
+			path = CityInputUITests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -859,12 +888,31 @@
 			productReference = 2D02E4901E0B4A5D006451C7 /* CityInput-tvOSTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		F56F2A03208A210D001F01C1 /* CityInputUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F56F2A36208A210D001F01C1 /* Build configuration list for PBXNativeTarget "CityInputUITests" */;
+			buildPhases = (
+				F56F2A00208A210D001F01C1 /* Sources */,
+				F56F2A01208A210D001F01C1 /* Frameworks */,
+				F56F2A02208A210D001F01C1 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				F56F2A0A208A210D001F01C1 /* PBXTargetDependency */,
+			);
+			name = CityInputUITests;
+			productName = CityInputUITests;
+			productReference = F56F2A04208A210D001F01C1 /* CityInputUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		83CBB9F71A601CBA00E9B192 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftUpdateCheck = 0920;
 				LastUpgradeCheck = 610;
 				ORGANIZATIONNAME = Facebook;
 				TargetAttributes = {
@@ -885,6 +933,12 @@
 						CreatedOnToolsVersion = 8.2.1;
 						ProvisioningStyle = Automatic;
 						TestTargetID = 2D02E47A1E0B4A5D006451C7;
+					};
+					F56F2A03208A210D001F01C1 = {
+						CreatedOnToolsVersion = 9.2;
+						DevelopmentTeam = J4Q5H32ZT7;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 				};
 			};
@@ -979,6 +1033,7 @@
 				00E356ED1AD99517003FC87E /* CityInputTests */,
 				2D02E47A1E0B4A5D006451C7 /* CityInput-tvOS */,
 				2D02E48F1E0B4A5D006451C7 /* CityInput-tvOSTests */,
+				F56F2A03208A210D001F01C1 /* CityInputUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -1327,6 +1382,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		F56F2A02208A210D001F01C1 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
@@ -1395,6 +1457,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		F56F2A00208A210D001F01C1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F56F2A07208A210D001F01C1 /* CityInputUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -1407,6 +1477,11 @@
 			isa = PBXTargetDependency;
 			target = 2D02E47A1E0B4A5D006451C7 /* CityInput-tvOS */;
 			targetProxy = 2D02E4911E0B4A5D006451C7 /* PBXContainerItemProxy */;
+		};
+		F56F2A0A208A210D001F01C1 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 13B07F861A680F5B00A75B9A /* CityInput */;
+			targetProxy = F56F2A09208A210D001F01C1 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1791,6 +1866,77 @@
 			};
 			name = Release;
 		};
+		F56F2A0B208A210D001F01C1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = J4Q5H32ZT7;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = CityInputUITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = Flux.CityInputUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = CityInput;
+			};
+			name = Debug;
+		};
+		F56F2A0C208A210D001F01C1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = J4Q5H32ZT7;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = CityInputUITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = Flux.CityInputUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = CityInput;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1835,6 +1981,15 @@
 			buildConfigurations = (
 				83CBBA201A601CBA00E9B192 /* Debug */,
 				83CBBA211A601CBA00E9B192 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F56F2A36208A210D001F01C1 /* Build configuration list for PBXNativeTarget "CityInputUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F56F2A0B208A210D001F01C1 /* Debug */,
+				F56F2A0C208A210D001F01C1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

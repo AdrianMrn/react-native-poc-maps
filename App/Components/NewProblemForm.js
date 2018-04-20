@@ -44,62 +44,66 @@ export default class NewProblemForm extends React.Component {
               }
             </View>
           </SafeAreaView>
-          <Form>
-            <View style={styles.itemContainer}>
-              <Label style={styles.textareaLabel}>Adres</Label>
-              <Input
-                style={[styles.textStyle, styles.addressInput]}
-                onChangeText={text => { onInputChange(text, 'address') }}
-                value={address}
-                maxLength={200}
-                multiline
-              />
-              <TouchableOpacity style={styles.editIcon} onPress={() => startPickingOnMap()}>
-                <Icon style={{ color: Colors.cityInputColor }} name={Platform.OS === 'ios' ? 'ios-create' : 'md-create'} />
-              </TouchableOpacity>
-            </View>
+          <SafeAreaView>
+            <Form>
+              <View style={styles.itemContainer}>
+                <Label style={styles.textareaLabel}>Adres</Label>
+                <Input
+                  style={[styles.textStyle, styles.addressInput]}
+                  onChangeText={text => { onInputChange(text, 'address') }}
+                  value={address}
+                  maxLength={200}
+                  multiline
+                />
+                <TouchableOpacity style={styles.editIcon} onPress={() => startPickingOnMap()}>
+                  <Icon style={{ color: Colors.cityInputColor }} name={Platform.OS === 'ios' ? 'ios-create' : 'md-create'} />
+                </TouchableOpacity>
+              </View>
 
-            <View style={styles.itemContainer}>
-              <Label style={styles.textareaLabel}>Titel</Label>
-              <Input
-                style={styles.textStyle}
-                onChangeText={text => { onInputChange(text, 'title') }}
-                value={title}
-                focus
-                maxLength={50}
-                multiline
-              />
-            </View>
+              <View style={styles.itemContainer}>
+                <Label style={styles.textareaLabel}>Titel</Label>
+                <Input
+                  style={styles.textStyle}
+                  onChangeText={text => { onInputChange(text, 'title') }}
+                  value={title}
+                  focus
+                  maxLength={50}
+                  multiline
+                />
+              </View>
 
-            <View style={styles.itemContainer}>
-              <Label style={styles.textareaLabel}>Beschrijving</Label>
-              <Input
-                style={styles.textStyle}
-                onChangeText={text => { onInputChange(text, 'description') }}
-                value={description}
-                maxLength={5000}
-                multiline
-              />
-            </View>
+              <View style={styles.itemContainer}>
+                <Label style={styles.textareaLabel}>Beschrijving</Label>
+                <Input
+                  style={styles.textStyle}
+                  onChangeText={text => { onInputChange(text, 'description') }}
+                  value={description}
+                  maxLength={5000}
+                  multiline
+                />
+              </View>
 
-            <View style={styles.imageAddSection}>
-              {!!imageSource &&
-                <View>
-                  <Image source={{ uri: imageSource.uri }} style={styles.imagePreview} />
-                  <TouchableOpacity style={styles.deleteImageContainer} onPress={deleteImage}>
-                    <Icon style={{ color: '#14171a' }} name={Platform.OS === 'ios' ? 'ios-close-circle-outline' : 'md-close-circle'} />
-                  </TouchableOpacity>
-                </View>
-              }
-            </View>
+              <View style={styles.imageAddSection}>
+                {!!imageSource &&
+                  <View>
+                    <Image source={{ uri: imageSource.uri }} style={styles.imagePreview} />
+                    <TouchableOpacity style={styles.deleteImageContainer} onPress={deleteImage}>
+                      <Icon style={{ color: '#14171a' }} name={Platform.OS === 'ios' ? 'ios-close-circle-outline' : 'md-close-circle'} />
+                    </TouchableOpacity>
+                  </View>
+                }
+              </View>
 
-          </Form>
+            </Form>
+          </SafeAreaView>
         </Content>
-        <Footer>
-          <FooterTab>
-            {this.renderButton()}
-          </FooterTab>
-        </Footer>
+
+          <Footer style={{ backgroundColor: 'white' }}>
+            <FooterTab>
+              {this.renderButton()}
+            </FooterTab>
+          </Footer>
+
       </Container>
     )
   }
