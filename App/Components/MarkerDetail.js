@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import { View, TouchableWithoutFeedback, TouchableOpacity, ScrollView, Image, Platform } from 'react-native'
 import { Container, Text, Spinner, Badge, Icon } from 'native-base';
-import Lightbox from 'react-native-lightbox';
 import styles from './Styles/MarkerDetailStyle'
+import Lightbox from '../EditedPackages/react-native-lightbox'
 import { Colors, Metrics } from '../Themes'
 
 export default class MarkerDetail extends Component {
@@ -44,7 +44,7 @@ export default class MarkerDetail extends Component {
             {
               !!location.imageuri &&
               <View style={styles.imageContainer}>
-                <Lightbox onClose={() => { console.log("onClose") }} willClose={() => { console.log("willClose") }} activeProps={activeProps} underlayColor={'#fff'} navigator={this.props.navigation}>
+                <Lightbox activeProps={activeProps} underlayColor={'#fff'} navigator={this.props.navigation}>
                   <Image resizeMode="cover" style={styles.image} source={{ uri: location.imageuri }} onLoad={() => this.imageLoaded()} />
                 </Lightbox>
                 {showSpinner &&
