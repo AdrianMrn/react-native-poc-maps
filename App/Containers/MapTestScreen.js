@@ -77,7 +77,8 @@ class MapTestScreen extends Component {
       text: 'Duw op de kaart om een plaats te kiezen!',
       position: 'top',
       buttonText: 'OK',
-      duration: 7000
+      duration: 7000,
+      type: 'warning'
     });
 
     const { newMarker, userPosition } = this.state;
